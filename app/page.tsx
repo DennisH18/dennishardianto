@@ -9,8 +9,11 @@ import {
   AiFillFileText,
   AiOutlineMail,
   AiOutlinePhone,
+  AiFillCalendar,
+  AiFillPlayCircle,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
+import { TbSchool } from "react-icons/tb";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -230,20 +233,20 @@ export default function Home() {
             </h2>
             <img
               src="intro-img.png"
-              className="absolute z-20 right-[-12px] top-[-50px]"
+              className="absolute z-20 right-[-40px] top-[-50px]"
               width={600}
             />
             <hr className="border-2 border-slate-900 z-20 mt-4"></hr>
             <div className="w-[50%] mt-4 text-slate-900">
               <div className="flex items-center">
                 <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
-                  <AiOutlineMail className="text-blue-500"/>
+                  <AiOutlineMail className="text-blue-500" />
                 </div>
                 <p>dennis18hardianto@gmail.com</p>
               </div>
               <div className="flex items-center mt-2">
                 <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
-                <AiOutlinePhone className="text-blue-500"/>
+                  <AiOutlinePhone className="text-blue-500" />
                 </div>
                 <p>+65 8197 4871</p>
               </div>
@@ -281,7 +284,7 @@ export default function Home() {
               </span>
             </button>
             {showMore && (
-              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2">
+              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2 shadow-xl">
                 <p className="mt-4 text-slate-900 AiOutlineCaretUp">
                   I am a final year student at the Singapore Management
                   University, studying Bachelor of Information Systems
@@ -298,17 +301,195 @@ export default function Home() {
         <div
           ref={contentRefs.education}
           id="education"
-          className="min-h-screen bg-blue-400"
+          className="min-h-screen"
         >
-          Education section content
+          <div className="w-[80%] ml-[10%] relative mt-24">
+            <div className="flex items-center text-blue-500 text-2xl z-30">
+              <TbSchool className="mr-2" />
+              <h2 className="font-mono">Education</h2>
+            </div>
+            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+              <div style={{ width: "15%", height: "100%" }}>
+                <img src="smu.png" className="w-full h-full object-cover" />
+              </div>
+              <div className="ml-4 flex-1">
+                <p className="font-semibold">Singapore Management University</p>
+                <div className="flex items-center mt-2 text-slate-500">
+                  <div className="mr-2">
+                    <AiFillCalendar />
+                  </div>
+                  <p>2021 - 2024</p>
+                </div>
+                <p className="mt-2">Bachelor of Information Systems</p>
+                <p className="mt-2 font-semibold">Dual track in</p>
+                <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center ">
+                  <div className="w-full md:w-1/2 flex items-center justify-center md:mt-0 mx-auto bg-white p-4 rounded-3xl shadow-lg m-4">
+                    <div className="text-center">
+                      <p className="mt-2 font-semibold">Business Analytics</p>
+                      <img
+                        src="ba.png"
+                        alt="Business Analytics"
+                        width={60}
+                        className="mx-auto"
+                      />
+                      <ul className="list-disc list-inside mt-2 text-left">
+                        <li>Data Mining and Business Analytics</li>
+                        <li>Financial Analytics</li>
+                        <li>Social Analytics and Applications</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="w-4"></div>
+                  <div className="w-full md:w-1/2 flex items-center justify-center md:mt-0 mx-auto bg-white p-4 rounded-3xl shadow-lg m-4">
+                    <div className="text-center">
+                      <p className="mt-2 font-semibold">
+                        Digitalization and Cloud Solutions
+                      </p>
+                      <img
+                        src="dcs.png"
+                        alt="Digitalization and Cloud Solutions"
+                        width={60}
+                        className="mx-auto"
+                      />
+                      <ul className="list-disc list-inside mt-2 text-left">
+                        <li>IT Solution Architecture</li>
+                        <li>Digital Transformation Strategy</li>
+                        <li>Enterprise Business Solution</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+              <div style={{ width: "15%", height: "100%" }}>
+                <img
+                  src="https://www.ibo.org/globalassets/new-structure/icons-and-logos/images/ib-world-school-logo-1-colour-rev.png"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="ml-4 flex-1">
+                <p className="font-semibold">Tunas Muda School</p>
+                <div className="flex items-center mt-2 text-slate-500">
+                  <div className="mr-2">
+                    <AiFillCalendar />
+                  </div>
+                  <p>2018 - 2021</p>
+                </div>
+                <ul className="list-disc list-inside mt-2">
+                  <li>International Baccaulareaute Diploma</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div
           ref={contentRefs.experience}
           id="experience"
-          className="min-h-screen bg-green-400"
+          className="min-h-screen"
         >
-          Experience section content
+          <div className="w-[70%] ml-[10%] mt-16 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
+              <AiOutlineCode className="mr-2" />
+              <h2 className="font-mono">Experience</h2>
+            </div>
+
+            <ol className="relative border-s-4 border-slate-700">
+              <li className="mb-10 ms-6">
+                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
+                  <img src="adi.png" alt="Your Logo" width={30} />
+                </div>
+                <div className="ml-6">
+                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
+                    Software Engineer
+                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
+                      Latest
+                    </span>
+                  </h3>
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    Aboitiz Data Innovation
+                  </time>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Implemented a user-friendly platform with NextJS for
+                    front-end and FastAPI on Digital Ocean, ensuring high
+                    availability, scalability, and seamless integration of
+                    machine learning models
+                  </p>
+                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Achieved ~9% Mean Absolute Percentage Error in property
+                    price predictions through integration of advanced machine
+                    learning models within a web application for real estate
+                    valuation
+                  </p>
+                  <a
+                    href="https://satelilit.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-2xl px-4 p-1 bg-transparent border-blue-500 border-2 hover:bg-blue-500 text-blue-500 hover:text-white w-44 flex items-center"
+                  >
+                    <AiFillPlayCircle className="mr-2 ml-1" />
+                    View Product
+                  </a>
+                </div>
+              </li>
+              <li className="mb-10 ms-6">
+                <div className="absolute flex items-center justify-center bg-slate-50 p-1 py-4 rounded-full -start-8 shadow-xl">
+                  <img
+                    src="https://vflowtech.com/wp-content/uploads/2021/10/VFT-Logo-PNG.png"
+                    alt="Your Logo"
+                    width={50}
+                  />
+                </div>
+                <div className="ml-6">
+                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
+                    Product Management Intern
+                  </h3>
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    VFlowTech
+                  </time>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Developed product plan and milestones, execution of
+                    project and coordination with other departments, and
+                    preparing product report and visualization of status
+                  </p>
+                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Communicate and engage with stakeholders to ensure end
+                    products or processes will solve related challenges,
+                    including product status, roadblocks, and escalations to
+                    Management
+                  </p>
+                </div>
+              </li>
+              <li className="mb-10 ms-6">
+                <div className="absolute flex items-center justify-center bg-slate-50 p-2 rounded-full -start-8 shadow-xl">
+                  <img src="smua.png" alt="Your Logo" width={45} />
+                </div>
+                <div className="ml-6">
+                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
+                    Student Assistant
+                  </h3>
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    SMU Academy
+                  </time>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Facilitate Course support for SkillsFuture funded courses
+                    for working professionals in partnership with the Government
+                    for Technology and Intelligent Systems, Service, Operations,
+                    and Business management courses
+                  </p>
+                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Conduct compilation of attendance, assessments, evaluation
+                    reports. Approving and verifying participants registrations.
+                    Setting up of units in learning management system. Creation
+                    of administrative documents.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
         </div>
+
         <div
           ref={contentRefs.projects}
           id="projects"
@@ -316,6 +497,7 @@ export default function Home() {
         >
           Projects section content
         </div>
+
         <div
           ref={contentRefs.skills}
           id="skills"
