@@ -6,7 +6,9 @@ import {
   AiOutlineClose,
   AiOutlineCode,
   AiOutlineCaretDown,
-  AiOutlineCaretUp,
+  AiFillFileText,
+  AiOutlineMail,
+  AiOutlinePhone,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
 
@@ -215,7 +217,7 @@ export default function Home() {
               <AiOutlineCode className="mr-2" />
               <h2 className="font-mono">Intro</h2>
             </div>
-            <h2 className="font-mono text-4xl text-slate-900 text-start relative z-30 mt-2">
+            <h2 className="font-mono text-5xl text-slate-900 text-start relative z-30 mt-2">
               <TypeAnimation
                 sequence={[
                   "Hi I'm Dennis, aspiring software engineer and data analyst",
@@ -232,17 +234,54 @@ export default function Home() {
               width={600}
             />
             <hr className="border-2 border-slate-900 z-20 mt-4"></hr>
+            <div className="w-[50%] mt-4 text-slate-900">
+              <div className="flex items-center">
+                <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
+                  <AiOutlineMail className="text-blue-500"/>
+                </div>
+                <p>dennis18hardianto@gmail.com</p>
+              </div>
+              <div className="flex items-center mt-2">
+                <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
+                <AiOutlinePhone className="text-blue-500"/>
+                </div>
+                <p>+65 8197 4871</p>
+              </div>
+            </div>
+            <div className="w-[50%] mt-4">
+              <div className="flex items-center">
+                <button
+                  className="rounded-2xl px-4 p-1 flex items-center bg-transparent border-blue-500 border-2 hover:bg-blue-500 text-blue-500 hover:text-white"
+                  onClick={() => {
+                    const url = "Resume Dennis Hardianto.pdf"; // Replace with actual URL
+                    const anchor = document.createElement("a");
+                    anchor.href = url;
+                    anchor.download = "Resume Dennis Hardianto.pdf";
+                    anchor.click();
+                  }}
+                >
+                  <AiFillFileText className="mr-2" />
+                  Resume
+                </button>
+              </div>
+            </div>
             <button
-              className={`text-start mt-4 flex items-center hover:text-blue-500 ${showMore ? 'text-blue-500': 'text-slate-500'}`}
+              className={`text-start mt-4 flex items-center hover:text-blue-500 ${
+                showMore ? "text-blue-500" : "text-slate-500"
+              }`}
               onClick={toggleShowMore}
             >
-              View More
-              <span className={`ml-2 transition-transform transform ${showMore ? 'rotate-180' : 'rotate-0'}`}>
+              Read More
+              <span
+                className={`ml-2 transition-transform transform ${
+                  showMore ? "rotate-180" : "rotate-0"
+                }`}
+              >
                 <AiOutlineCaretDown />
               </span>
             </button>
             {showMore && (
-              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2" >
+              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2">
                 <p className="mt-4 text-slate-900 AiOutlineCaretUp">
                   I am a final year student at the Singapore Management
                   University, studying Bachelor of Information Systems
