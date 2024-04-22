@@ -1,6 +1,14 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import {
+  AiOutlineMenu,
+  AiOutlineClose,
+  AiOutlineCode,
+  AiOutlineCaretDown,
+  AiOutlineCaretUp,
+} from "react-icons/ai";
+import { TypeAnimation } from "react-type-animation";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -15,11 +23,11 @@ export default function Home() {
     skills: useRef(null),
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
 
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
@@ -49,11 +57,17 @@ export default function Home() {
     };
   }, []);
 
+  const toggleShowMore = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <div className="flex">
       <div
-        className={`bg-slate-900 shadow-lg rounded-lg p-6 fixed m-2 top-0 left-0 z-50 h-full ${
-          isMenuOpen ? "block w-full" : "hidden sm:block"
+        className={`bg-slate-900 shadow-lg rounded-lg p-6 fixed m-2 top-0 left-0 z-50 ${
+          isMenuOpen
+            ? "block w-full animate-expand-left-to-right"
+            : "hidden sm:block"
         }`}
         style={{ height: "calc(100% - 1rem)" }}
       >
@@ -64,8 +78,8 @@ export default function Home() {
         <div className="flex justify-center items-center mb-4">
           <img
             src={"profile.png"}
-            width={40}
-            height={50}
+            width={60}
+            height={70}
             className="rounded-full"
             alt="Profile Picture"
           />
@@ -180,40 +194,68 @@ export default function Home() {
       </div>
 
       <button
-        className="sm:hidden absolute top-4 right-4 z-50"
+        className="sm:hidden top-4 right-4 z-50 fixed"
         onClick={handleToggleMenu}
       >
-        <svg
-          className="w-6 h-6 text-white cursor-pointer"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          {isMenuOpen ? (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          ) : (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          )}
-        </svg>
+        {isMenuOpen ? (
+          <AiOutlineClose className="w-6 h-6 text-white cursor-pointer" />
+        ) : (
+          <AiOutlineMenu className="w-6 h-6 text-white cursor-pointer" />
+        )}
       </button>
 
-      <div className="flex flex-col flex-1 lg:ml-64 mt-2">
+      <div className="flex flex-col flex-1 lg:ml-72 md:ml-72 mt-2">
         <div
           ref={contentRefs.introduction}
           id="introduction"
-          className="min-h-screen bg-red-400"
+          className="min-h-screen flex flex-col"
         >
-          Introduction section content
+          <div className="w-[70%] ml-[10%] mt-32 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-30">
+              <AiOutlineCode className="mr-2" />
+              <h2 className="font-mono">Intro</h2>
+            </div>
+            <h2 className="font-mono text-4xl text-slate-900 text-start relative z-30">
+              <TypeAnimation
+                sequence={[
+                  "Hi I'm Dennis, aspiring software engineer and data analyst",
+                  1000,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+              />
+            </h2>
+            <img
+              src="intro-img.png"
+              className="absolute z-20 right-[-20px] top-[-50px]"
+              width={600}
+            />
+            <hr className="border-2 border-slate-900 z-20 mt-4"></hr>
+            <button
+              className={`text-start mt-4 flex items-center hover:text-blue-500 ${showMore ? 'text-blue-500': 'text-slate-500'}`}
+              onClick={toggleShowMore}
+            >
+              View More
+              <span className={`ml-2 transition-transform transform ${showMore ? 'rotate-180' : 'rotate-0'}`}>
+                <AiOutlineCaretDown />
+              </span>
+            </button>
+            {showMore && (
+              <div className={`w-[50%] bg-slate-50 p-4 ${showMore ? 'h-auto' : 'h-0 overflow-hidden'} transition-height duration-500 ease-in-out`}>
+  <p className="mt-4 text-slate-900">
+    I am a final year student at the Singapore Management
+    University, studying Bachelor of Information Systems
+  </p>
+  <p className="mt-4 text-slate-900">
+    I am passionate about technology and its potential to solve
+    real-world problems. I have experience in software
+    development, data analysis, and machine learning.
+  </p>
+</div>
+
+            )}
+          </div>
         </div>
         <div
           ref={contentRefs.education}
