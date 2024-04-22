@@ -13,16 +13,16 @@ const config: Config = {
     extend: {
       animation: {
         'expand-left-to-right': 'expand-left-to-right 0.5s ease',
-        'expand-to-bottom': 'expand-to-bottom 0.5s ease',
+        "expand": 'expand 0.5s ease-in-out',
       },
       keyframes: {
         'expand-left-to-right': {
           '0%': { width: '0%' },
           '100%': { width: '100%' },
         },
-        'expand-to-bottom': {
-          '0%': { height: '0%' },
-          '100%': { height: '100%' },
+        "expand": {
+          from: { transform: 'scaleY(0)', transformOrigin: 'top' },
+          to: { transform: 'scaleY(1)', transformOrigin: 'top' },
         },
       },
     },

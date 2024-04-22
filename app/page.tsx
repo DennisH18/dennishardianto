@@ -215,7 +215,7 @@ export default function Home() {
               <AiOutlineCode className="mr-2" />
               <h2 className="font-mono">Intro</h2>
             </div>
-            <h2 className="font-mono text-4xl text-slate-900 text-start relative z-30">
+            <h2 className="font-mono text-4xl text-slate-900 text-start relative z-30 mt-2">
               <TypeAnimation
                 sequence={[
                   "Hi I'm Dennis, aspiring software engineer and data analyst",
@@ -228,7 +228,7 @@ export default function Home() {
             </h2>
             <img
               src="intro-img.png"
-              className="absolute z-20 right-[-20px] top-[-50px]"
+              className="absolute z-20 right-[-12px] top-[-50px]"
               width={600}
             />
             <hr className="border-2 border-slate-900 z-20 mt-4"></hr>
@@ -242,18 +242,17 @@ export default function Home() {
               </span>
             </button>
             {showMore && (
-              <div className={`w-[50%] bg-slate-50 p-4 ${showMore ? 'h-auto' : 'h-0 overflow-hidden'} transition-height duration-500 ease-in-out`}>
-  <p className="mt-4 text-slate-900">
-    I am a final year student at the Singapore Management
-    University, studying Bachelor of Information Systems
-  </p>
-  <p className="mt-4 text-slate-900">
-    I am passionate about technology and its potential to solve
-    real-world problems. I have experience in software
-    development, data analysis, and machine learning.
-  </p>
-</div>
-
+              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2" >
+                <p className="mt-4 text-slate-900 AiOutlineCaretUp">
+                  I am a final year student at the Singapore Management
+                  University, studying Bachelor of Information Systems
+                </p>
+                <p className="mt-4 text-slate-900">
+                  I am passionate about technology and its potential to solve
+                  real-world problems. I have experience in software
+                  development, data analysis, and machine learning.
+                </p>
+              </div>
             )}
           </div>
         </div>
