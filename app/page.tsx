@@ -15,8 +15,38 @@ import {
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
 import { TbSchool } from "react-icons/tb";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import Autoplay from "embla-carousel-autoplay";
+import Carousel from "@/components/ui/carousel";
+
+
+interface CarouselItem {
+  id: number;
+  title: string;
+  desc: string;
+  images: string[];
+}
+
+
+const items: CarouselItem[] = [
+  {
+    id: 1,
+    title: "Card 1",
+    desc: "Description 1",
+    images: ["adi-1.jpg", "image1-2.jpg", "image1-3.jpg"],
+  },
+  {
+    id: 2,
+    title: "Card 2",
+    desc: "Description 2",
+    images: ["image2-1.jpg", "image2-2.jpg", "image2-3.jpg"],
+  },
+  {
+    id: 3,
+    title: "Card 3",
+    desc: "Description 3",
+    images: ["image3-1.jpg", "image3-2.jpg", "image3-3.jpg"],
+  },
+];
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -68,6 +98,14 @@ export default function Home() {
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleSlideChange = (currentItem: any, pageIndex: any) => {
+    setCurrentIndex(pageIndex);
+  };
+
+  const plugin = useRef(Autoplay({ delay: 2500, stopOnInteraction: true }));
 
   return (
     <div className="flex">
@@ -492,18 +530,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div ref={contentRefs.projects} id="projects" className="min-h-screen">
-          
-          
-        </div>
-
-        <div
-          ref={contentRefs.skills}
-          id="skills"
-          className="min-h-screen bg-purple-400"
-        >
-          Skills section content
-        </div>
+        
       </div>
     </div>
   );
