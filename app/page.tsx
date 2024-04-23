@@ -11,9 +11,12 @@ import {
   AiOutlinePhone,
   AiFillCalendar,
   AiFillPlayCircle,
+  AiOutlineLaptop,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
 import { TbSchool } from "react-icons/tb";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -383,7 +386,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <div
           ref={contentRefs.experience}
           id="experience"
@@ -490,12 +492,31 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          ref={contentRefs.projects}
-          id="projects"
-          className="min-h-screen bg-yellow-400"
-        >
-          Projects section content
+        <div ref={contentRefs.projects} id="projects" className="min-h-screen">
+          <div className="w-[80%] ml-[10%] mt-10 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
+              <AiOutlineLaptop className="mr-2" />
+              <h2 className="font-mono">Projects</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              {/* Project 1 */}
+              <div className="p-4 bg-slate-50 shadow-xl rounded-lg h-80">
+                {/* Project content goes here */}
+              </div>
+              {/* Project 2 */}
+              <div className="p-4 bg-slate-50 shadow-xl rounded-lg h-80">
+                {/* Project content goes here */}
+              </div>
+              {/* Project 3 */}
+              <div className="p-4 bg-slate-50 shadow-xl rounded-lg h-80">
+                {/* Project content goes here */}
+              </div>
+              {/* Project 4 */}
+              <div className="p-4 bg-slate-50 shadow-xl rounded-lg h-80">
+                {/* Project content goes here */}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div
