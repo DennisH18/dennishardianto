@@ -80,6 +80,17 @@ export default function Home() {
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
+  const projects = [
+    { src: "satpai.png", title: "Satelilit.ai", description: "Develop Housing Valuation Analysis with Advanced Machine Learning Algorithms", tags: ["next.png", "fast.png", "pandas.png", "do.png", "pytorch.png","maps.png"] },
+    { src: "gw.png", title: "Glasswindow", description: "One stop internal Hiring platform built on TDD and CI/CD", tags: ["react.png", "cypress.png", "github.png", "supabase.png","pytest.png","fast.png","vercel.png"] },
+    { src: "itsa.png", title: "Blue Bank", description: "Secure Authentication System and database architecture built on AWS cloud services", tags: ["aws.png", "react.png", "sass.png", "cognito.png","s3.png"] },
+    { src: "esd.png", title: "Leave Management System", description: "Platform for internal employee Leave application and purchases", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
+    { src: "wad.png",title: "Unihelp", description: "Dedicated platform for University Students forum and Statistics in Singapore", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
+    { src: "dm.png", title: "Hotel Satisfaction Analysis", description: "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
+    { src: "dts.png", title: "MediaSphere", description: "Digital transformation Strategy for Saltine on revolutionzing the PR industry", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
+    { src: "sa.png", title: "MarketPulse", description: "Enhance Social Media presence strategized based on data driven decisions ", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] }
+  ];
+
   return (
     <div className="flex">
       <div
@@ -503,30 +514,38 @@ export default function Home() {
           </div>
         </div>
         <div ref={contentRefs.projects} id="projects" className="min-h-screen">
-          <div className="w-[70%] ml-[10%] mt-20 relative">
+          <div className="w-[75%] ml-[10%] mt-20 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
+              <AiOutlineLaptop className="mr-2" />
               <h2 className="font-mono">Projects</h2>
             </div>
             <Carousel
               plugins={[plugin.current]}
-              className="w-full h-full"
               onMouseEnter={plugin.current.stop}
               onMouseLeave={plugin.current.reset}
             >
               <CarouselContent className="-ml-1">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {projects.map((image, index) => (
                   <CarouselItem
                     key={index}
-                    className="pl-1 md:basis-1/2 lg:basis-1/3 shadow-lg"
+                    className="p-3 md:basis-1/2 lg:basis-1/3"
                   >
                     <div className="p-1">
-                      <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-4xl font-semibold">
-                            {index + 1}
-                          </span>
-                        </CardContent>
-                      </Card>
+                      <div className="bg-white shadow-md rounded-lg h-96 hover:scale-105 hover:rounded-lg">
+                        <img
+                          src={image.src}
+                          alt={`Image ${index + 1}`}
+                          className="rounded-t-lg shadow-lg"
+                        />
+                        <div>
+                          <p>{image.description}</p>
+                          <ul>
+                            {image.tags.map((tag, tagIndex) => (
+                              <li key={tagIndex}>{tag}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </CarouselItem>
                 ))}
