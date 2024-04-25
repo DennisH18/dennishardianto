@@ -15,9 +15,8 @@ import {
   AiOutlineBulb,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
-import { TbSchool } from "react-icons/tb";
+import { TbSchool, TbUserCircle, TbBooks } from "react-icons/tb";
 import Autoplay from "embla-carousel-autoplay";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -36,7 +35,7 @@ export default function Home() {
     education: useRef(null),
     experience: useRef(null),
     projects: useRef(null),
-    skills: useRef(null),
+    contact: useRef(null),
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -209,14 +208,14 @@ export default function Home() {
             </li>
             <li
               className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "skills"
+                selectedItem === "contact"
                   ? "bg-slate-700 animate-expand-left-to-right"
                   : ""
               }`}
-              onClick={() => handleItemClick("skills")}
+              onClick={() => handleItemClick("contact")}
             >
-              <a href="#skills" className="text-white">
-                Skills
+              <a href="#contact" className="text-white">
+                Contact
               </a>
             </li>
           </ul>
@@ -232,11 +231,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="mr-6 hover:scale-110"
             >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/640px-LinkedIn_logo_initials.png"
-                width={22}
-                alt="LinkedIn"
-              />
+              <img src="linkedin.svg" width={22} alt="LinkedIn" />
             </a>
             <a
               href="https://github.com/DennisH18"
@@ -252,11 +247,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="hover:scale-110"
             >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                width={22}
-                alt="Email"
-              />
+              <img src="gmail.png" width={25} alt="Email" />
             </a>
           </div>
         </div>
@@ -454,7 +445,7 @@ export default function Home() {
         >
           <div className="w-[70%] ml-[10%] mt-16 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
-              <AiOutlineCode className="mr-2" />
+              <TbBooks className="mr-2" />
               <h2 className="font-mono">Experience</h2>
             </div>
 
@@ -607,12 +598,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          ref={contentRefs.skills}
-          id="skills"
-          className="min-h-screen bg-purple-400"
-        >
-          Skills section content
+        <div ref={contentRefs.contact} id="contact" className="min-h-screen ">
+          <div className="w-[70%] ml-[10%] mt-24 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
+              <TbUserCircle className="mr-2" />
+              <h2 className="font-mono">Contact Me</h2>
+            </div>
+          </div>
         </div>
       </div>
     </div>

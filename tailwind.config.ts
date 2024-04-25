@@ -14,6 +14,7 @@ const config: Config = {
       animation: {
         'expand-left-to-right': 'expand-left-to-right 0.5s ease',
         "expand": 'expand 0.5s ease-in-out',
+
       },
       keyframes: {
         'expand-left-to-right': {
