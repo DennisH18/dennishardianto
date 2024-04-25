@@ -12,6 +12,7 @@ import {
   AiFillCalendar,
   AiFillPlayCircle,
   AiOutlineLaptop,
+  AiOutlineBulb,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
 import { TbSchool } from "react-icons/tb";
@@ -76,19 +77,79 @@ export default function Home() {
     setShowMore(!showMore);
   };
 
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  );
+  const plugin = React.useRef(Autoplay({ delay: 2000, pauseOnHover: true }));
 
   const projects = [
-    { src: "satpai.png", title: "Satelilit.ai", description: "Develop Housing Valuation Analysis with Advanced Machine Learning Algorithms", tags: ["next.png", "fast.png", "pandas.png", "do.png", "pytorch.png","maps.png"] },
-    { src: "gw.png", title: "Glasswindow", description: "One stop internal Hiring platform built on TDD and CI/CD", tags: ["react.png", "cypress.png", "github.png", "supabase.png","pytest.png","fast.png","vercel.png"] },
-    { src: "itsa.png", title: "Blue Bank", description: "Secure Authentication System and database architecture built on AWS cloud services", tags: ["aws.png", "react.png", "sass.png", "cognito.png","s3.png"] },
-    { src: "esd.png", title: "Leave Management System", description: "Platform for internal employee Leave application and purchases", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
-    { src: "wad.png",title: "Unihelp", description: "Dedicated platform for University Students forum and Statistics in Singapore", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
-    { src: "dm.png", title: "Hotel Satisfaction Analysis", description: "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
-    { src: "dts.png", title: "MediaSphere", description: "Digital transformation Strategy for Saltine on revolutionzing the PR industry", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] },
-    { src: "sa.png", title: "MarketPulse", description: "Enhance Social Media presence strategized based on data driven decisions ", tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"] }
+    {
+      src: "satpai.png",
+      title: "Satelilit.ai",
+      description:
+        "Develop Housing Valuation Analysis with Advanced Machine Learning Algorithms",
+      tags: [
+        "next.png",
+        "fast.png",
+        "pandas.png",
+        "do.png",
+        "pytorch.png",
+        "maps.png",
+      ],
+    },
+    {
+      src: "gw.png",
+      title: "Glasswindow",
+      description: "One stop internal Hiring platform built on TDD and CI/CD",
+      tags: [
+        "react.png",
+        "cypress.png",
+        "github.png",
+        "supabase.png",
+        "pytest.png",
+        "fast.png",
+        "vercel.png",
+      ],
+    },
+    {
+      src: "itsa.png",
+      title: "Blue Bank",
+      description:
+        "Secure Authentication System and database architecture built on AWS cloud services",
+      tags: ["aws.png", "react.png", "sass.png", "cognito.png", "s3.png"],
+    },
+    {
+      src: "esd.png",
+      title: "Leave Management System",
+      description:
+        "Platform for internal employee Leave application and purchases",
+      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+    },
+    {
+      src: "wad.png",
+      title: "Unihelp",
+      description:
+        "Dedicated platform for University Students forum and Statistics in Singapore",
+      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+    },
+    {
+      src: "dm.png",
+      title: "Hotel Satisfaction Analysis",
+      description:
+        "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ",
+      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+    },
+    {
+      src: "dts.png",
+      title: "MediaSphere",
+      description:
+        "Digital transformation Strategy for Saltine Communications on revolutionzing the PR industry",
+      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+    },
+    {
+      src: "sa.png",
+      title: "MarketPulse",
+      description:
+        "Enhance Social Media presence strategized based on data driven decisions ",
+      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+    },
   ];
 
   return (
@@ -513,6 +574,7 @@ export default function Home() {
             </ol>
           </div>
         </div>
+
         <div ref={contentRefs.projects} id="projects" className="min-h-screen">
           <div className="w-[75%] ml-[10%] mt-20 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
@@ -525,25 +587,38 @@ export default function Home() {
               onMouseLeave={plugin.current.reset}
             >
               <CarouselContent className="-ml-1">
-                {projects.map((image, index) => (
+                {projects.map((project, index) => (
                   <CarouselItem
                     key={index}
                     className="p-3 md:basis-1/2 lg:basis-1/3"
                   >
                     <div className="p-1">
-                      <div className="bg-white shadow-md rounded-lg h-96 hover:scale-105 hover:rounded-lg">
+                      <div className="bg-slate-50 shadow-md rounded-lg h-[450px] hover:rounded-lg">
                         <img
-                          src={image.src}
+                          src={project.src}
                           alt={`Image ${index + 1}`}
-                          className="rounded-t-lg shadow-lg"
+                          className="rounded-t-lg shadow-lg mb-2"
                         />
-                        <div>
-                          <p>{image.description}</p>
-                          <ul>
-                            {image.tags.map((tag, tagIndex) => (
-                              <li key={tagIndex}>{tag}</li>
+                        <div className="pl-4">
+                          <h3 className="text-lg font-semibold">
+                            {project.title}
+                          </h3>
+                          <p className="mb-4">{project.description}</p>
+                          <div className="flex flex-wrap">
+                            {project.tags.map((tag, tagIndex) => (
+                              <div
+                                key={tagIndex}
+                                className="flex items-center mr-2 mb-2"
+                              >
+                                <img
+                                  src={tag}
+                                  alt={tag}
+                                  className="rounded-lg shadow-md p-1 hover:scale-110"
+                                  sizes="10px"
+                                />
+                              </div>
                             ))}
-                          </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -555,6 +630,7 @@ export default function Home() {
             </Carousel>
           </div>
         </div>
+        
 
         <div
           ref={contentRefs.skills}
