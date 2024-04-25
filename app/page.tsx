@@ -77,7 +77,7 @@ export default function Home() {
     setShowMore(!showMore);
   };
 
-  const plugin = React.useRef(Autoplay({ delay: 2000, pauseOnHover: true }));
+  const plugin = React.useRef(Autoplay({ delay: 2000 }));
 
   const projects = [
     {
@@ -89,7 +89,6 @@ export default function Home() {
         "next.png",
         "fast.png",
         "pandas.png",
-        "do.png",
         "pytorch.png",
         "maps.png",
       ],
@@ -97,11 +96,10 @@ export default function Home() {
     {
       src: "gw.png",
       title: "Glasswindow",
-      description: "One stop internal Hiring platform built on TDD and CI/CD",
+      description:
+        "One stop internal Hiring platform built on Test Driven Development and CI/CD",
       tags: [
-        "react.png",
         "cypress.png",
-        "github.png",
         "supabase.png",
         "pytest.png",
         "fast.png",
@@ -110,24 +108,24 @@ export default function Home() {
     },
     {
       src: "itsa.png",
-      title: "Blue Bank",
+      title: "IT Solution Architecture",
       description:
         "Secure Authentication System and database architecture built on AWS cloud services",
-      tags: ["aws.png", "react.png", "sass.png", "cognito.png", "s3.png"],
+      tags: ["aws.png", "react.png", "cog.png","jwt.png", "sass.png"],
     },
     {
       src: "esd.png",
       title: "Leave Management System",
       description:
-        "Platform for internal employee Leave application and purchases",
-      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+        "Platform for Leave application and purchases based on Microservices architecture",
+      tags: ["vue.png", "docker.png", "rmq.png", "kong.png", "pp.png"],
     },
     {
       src: "wad.png",
       title: "Unihelp",
       description:
         "Dedicated platform for University Students forum and Statistics in Singapore",
-      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+      tags: ["react.png", "firebase.png", "js.png", "bs.png","node.png"],
     },
     {
       src: "dm.png",
@@ -140,7 +138,7 @@ export default function Home() {
       src: "dts.png",
       title: "MediaSphere",
       description:
-        "Digital transformation Strategy for Saltine Communications on revolutionzing the PR industry",
+        "Digital transformation Strategy for Saltine Communications on the PR industry",
       tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
     },
     {
@@ -592,33 +590,31 @@ export default function Home() {
                     key={index}
                     className="p-3 md:basis-1/2 lg:basis-1/3"
                   >
-                    <div className="p-1">
-                      <div className="bg-slate-50 shadow-md rounded-lg h-[450px] hover:rounded-lg">
-                        <img
-                          src={project.src}
-                          alt={`Image ${index + 1}`}
-                          className="rounded-t-lg shadow-lg mb-2"
-                        />
-                        <div className="pl-4">
-                          <h3 className="text-lg font-semibold">
-                            {project.title}
-                          </h3>
-                          <p className="mb-4">{project.description}</p>
-                          <div className="flex flex-wrap">
-                            {project.tags.map((tag, tagIndex) => (
-                              <div
-                                key={tagIndex}
-                                className="flex items-center mr-2 mb-2"
-                              >
-                                <img
-                                  src={tag}
-                                  alt={tag}
-                                  className="rounded-lg shadow-md p-1 hover:scale-110"
-                                  sizes="10px"
-                                />
-                              </div>
-                            ))}
-                          </div>
+                    <div className="bg-slate-50 shadow-md rounded-lg h-[450px] hover:rounded-lg">
+                      <img
+                        src={project.src}
+                        alt={`Image ${index + 1}`}
+                        className="rounded-t-lg shadow-lg mb-2"
+                      />
+                      <div className="px-2">
+                        <h3 className="text-lg font-semibold mx-auto text-center font-mono">
+                          {project.title}
+                        </h3>
+                        <p className="mb-4 mx-auto">{project.description}</p>
+                        <div className="grid grid-cols-5 gap-2 mx-auto">
+                          {project.tags.map((tag, tagIndex) => (
+                            <div
+                              key={tagIndex}
+                              className="flex items-center justify-center w-8 h-8 justify-self-center"
+                              style={{ minWidth: "32px", minHeight: "32px" }}
+                            >
+                              <img
+                                src={tag}
+                                alt={tag}
+                                className="rounded-lg shadow-md p-1 hover:scale-110 object-contain h-full w-full"
+                              />
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -630,7 +626,6 @@ export default function Home() {
             </Carousel>
           </div>
         </div>
-        
 
         <div
           ref={contentRefs.skills}
