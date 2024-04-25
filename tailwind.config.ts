@@ -1,40 +1,31 @@
-import type { Config } from "tailwindcss"
+// tailwind.config.js
 
-const config = {
-  darkMode: ["class"],
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  prefix: "",
+  plugins: [],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        'expand-left-to-right': 'expand-left-to-right 0.5s ease',
+        "expand": 'expand 0.5s ease-in-out',
+      },
+      keyframes: {
+        'expand-left-to-right': {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
+        },
+        "expand": {
+          from: { transform: 'scaleY(0)', transformOrigin: 'top' },
+          to: { transform: 'scaleY(1)', transformOrigin: 'top' },
+        },
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
-
-export default config
+};
+export default config;

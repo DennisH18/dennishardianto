@@ -128,13 +128,6 @@ export default function Home() {
         "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ",
       tags: ["python.png", "pandas.png", "numpy.png", "seaborn.png", "mpl.png"],
     },
-    {
-      src: "sa.png",
-      title: "MarketPulse",
-      description:
-        "Enhance Social Media presence strategized based on data driven decisions ",
-      tags: ["python.png", "pandas.png", "numpy.png", "seaborn.png", "apify.png"],
-    },
   ];
 
   return (
