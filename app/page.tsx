@@ -85,13 +85,7 @@ export default function Home() {
       title: "Satelilit.ai",
       description:
         "Develop Housing Valuation Analysis with Advanced Machine Learning Algorithms",
-      tags: [
-        "next.png",
-        "fast.png",
-        "pandas.png",
-        "pytorch.png",
-        "maps.png",
-      ],
+      tags: ["next.png", "fast.png", "pandas.png", "pytorch.png", "maps.png"],
     },
     {
       src: "gw.png",
@@ -111,13 +105,13 @@ export default function Home() {
       title: "IT Solution Architecture",
       description:
         "Secure Authentication System and database architecture built on AWS cloud services",
-      tags: ["aws.png", "react.png", "cog.png","jwt.png", "sass.png"],
+      tags: ["aws.png", "react.png", "cog.png", "jwt.png", "sass.png"],
     },
     {
       src: "esd.png",
       title: "Leave Management System",
       description:
-        "Platform for Leave application and purchases based on Microservices architecture",
+        "Platform for Leave Management built on Microservices architecture",
       tags: ["vue.png", "docker.png", "rmq.png", "kong.png", "pp.png"],
     },
     {
@@ -125,28 +119,21 @@ export default function Home() {
       title: "Unihelp",
       description:
         "Dedicated platform for University Students forum and Statistics in Singapore",
-      tags: ["react.png", "firebase.png", "js.png", "bs.png","node.png"],
+      tags: ["react.png", "firebase.png", "js.png", "bs.png", "node.png"],
     },
     {
       src: "dm.png",
       title: "Hotel Satisfaction Analysis",
       description:
         "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ",
-      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
-    },
-    {
-      src: "dts.png",
-      title: "MediaSphere",
-      description:
-        "Digital transformation Strategy for Saltine Communications on the PR industry",
-      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+      tags: ["python.png", "pandas.png", "numpy.png", "seaborn.png", "mpl.png"],
     },
     {
       src: "sa.png",
       title: "MarketPulse",
       description:
         "Enhance Social Media presence strategized based on data driven decisions ",
-      tags: ["react.png", "nodejs.png", "express.png", "mongodb.png"],
+      tags: ["python.png", "pandas.png", "numpy.png", "seaborn.png", "apify.png"],
     },
   ];
 
@@ -590,14 +577,14 @@ export default function Home() {
                     key={index}
                     className="p-3 md:basis-1/2 lg:basis-1/3"
                   >
-                    <div className="bg-slate-50 shadow-md rounded-lg h-[450px] hover:rounded-lg">
+                    <div className="bg-slate-50 shadow-md rounded-lg h-[500px] hover:rounded-lg">
                       <img
                         src={project.src}
                         alt={`Image ${index + 1}`}
-                        className="rounded-t-lg shadow-lg mb-2"
+                        className="rounded-t-lg shadow-lg mb-6"
                       />
-                      <div className="px-2">
-                        <h3 className="text-lg font-semibold mx-auto text-center font-mono">
+                      <div className="px-2 mx-4">
+                        <h3 className="text-lg font-semibold mx-auto text-center font-mono mb-2">
                           {project.title}
                         </h3>
                         <p className="mb-4 mx-auto">{project.description}</p>
