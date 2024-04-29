@@ -15,7 +15,7 @@ import {
   AiOutlineBulb,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
-import { TbSchool, TbUserCircle, TbBooks } from "react-icons/tb";
+import { TbSchool, TbBooks, TbMoon, TbSun } from "react-icons/tb";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -24,6 +24,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "next-themes"
+
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -35,10 +38,12 @@ export default function Home() {
     education: useRef(null),
     experience: useRef(null),
     projects: useRef(null),
-    contact: useRef(null),
+    skills: useRef(null),
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const { setTheme } = useTheme();
+
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -47,6 +52,14 @@ export default function Home() {
   const handleItemClick = (item: string) => {
     setSelectedItem(item);
     contentRefs[item].current!.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  const handleThemeChange = () => {
+    const newTheme = darkMode ? 'light' : 'dark';
+    setDarkMode(!darkMode);
+    setTheme(newTheme);
   };
 
   const handleScroll = () => {
@@ -207,23 +220,26 @@ export default function Home() {
               </a>
             </li>
             <li
-              className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "contact"
+              className={`mb-6 p-2 hover:bg-slate-800 rounded-lg ${
+                selectedItem === "skills"
                   ? "bg-slate-700 animate-expand-left-to-right"
                   : ""
               }`}
-              onClick={() => handleItemClick("contact")}
+              onClick={() => handleItemClick("skills")}
             >
-              <a href="#contact" className="text-white">
-                Contact
+              <a href="#skills" className="text-white">
+                Skills
               </a>
             </li>
+            <li className="flex flex-row px-2 text-white">
+              <TbSun className="mt-[2px]"/>
+              <Switch checked={darkMode} onCheckedChange={handleThemeChange} className="mx-2"/>
+              <TbMoon className="mt-[2px]"/>
+            </li>
+            
           </ul>
         </div>
         <div className="absolute bottom-4 left-0 right-0 pb-4">
-          <p className="ml-6 mb-4 text-white text-sm font-semibold">
-            Get in touch
-          </p>
           <div className="flex justify-center items-center">
             <a
               href="https://www.linkedin.com/in/dennis-hardianto-196729218/"
@@ -247,7 +263,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="hover:scale-110"
             >
-              <img src="gmail.png" width={25} alt="Email" />
+              <img src="gmail.png" width={22} alt="Email" />
             </a>
           </div>
         </div>
@@ -258,9 +274,9 @@ export default function Home() {
         onClick={handleToggleMenu}
       >
         {isMenuOpen ? (
-          <AiOutlineClose className="w-6 h-6 text-white cursor-pointer" />
+          <AiOutlineClose className="w-6 h-6 cursor-pointer" />
         ) : (
-          <AiOutlineMenu className="w-6 h-6 text-white cursor-pointer" />
+          <AiOutlineMenu className="w-6 h-6 cursor-pointer" />
         )}
       </button>
 
@@ -457,13 +473,19 @@ export default function Home() {
                 <div className="ml-6">
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
                     Software Engineer
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
+                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded light:bg-blue-900 dark:text-blue-300 ms-3">
                       Latest
                     </span>
                   </h3>
-                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                    Aboitiz Data Innovation
-                  </time>
+                  <div className="flex flex-row justify-between mb-2">
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      Aboitiz Data Innovation
+                    </time>
+
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      January 2023 - April 2024
+                    </time>
+                  </div>
                   <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
                     • Implemented a user-friendly platform with NextJS for
                     front-end and FastAPI on Digital Ocean, ensuring high
@@ -499,9 +521,14 @@ export default function Home() {
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
                     Product Management Intern
                   </h3>
-                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                    VFlowTech
-                  </time>
+                  <div className="flex flex-row justify-between mb-2">
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      VFlowTech
+                    </time>
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      May 2023 - Nov 2023
+                    </time>
+                  </div>
                   <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
                     • Developed product plan and milestones, execution of
                     project and coordination with other departments, and
@@ -523,9 +550,14 @@ export default function Home() {
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
                     Student Assistant
                   </h3>
-                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                    SMU Academy
-                  </time>
+                  <div className="flex flex-row justify-between mb-2">
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      SMU Academy
+                    </time>
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      July 2022 - Present
+                    </time>
+                  </div>
                   <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
                     • Facilitate Course support for SkillsFuture funded courses
                     for working professionals in partnership with the Government
@@ -598,11 +630,54 @@ export default function Home() {
           </div>
         </div>
 
-        <div ref={contentRefs.contact} id="contact" className="min-h-screen ">
-          <div className="w-[70%] ml-[10%] mt-24 relative">
-            <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
-              <TbUserCircle className="mr-2" />
-              <h2 className="font-mono">Contact Me</h2>
+        <div ref={contentRefs.skills} id="skills" className="min-h-screen">
+          <div className="w-[75%] ml-[10%] mt-20 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-30 mb-6">
+              <AiOutlineBulb className="mr-2" />
+              <h2 className="font-mono">Skills and Expertise</h2>
+            </div>
+            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+              <div style={{ width: "15%", height: "100%" }}>
+                <img src="pm.png" className="w-full h-full object-cover" />
+              </div>
+              <div className="ml-4 flex-1">
+                <p className="font-semibold">Project Management</p>
+
+                <p>
+                  I excel at coordinating teams and resources to deliver
+                  projects on time, leveraging my experience as a Scrum Master
+                  and Jira Integration tools
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+              <div style={{ width: "15%", height: "100%" }}>
+                <img src="dev.png" className="w-full h-full object-cover" />
+              </div>
+              <div className="ml-4 flex-1">
+                <p className="font-semibold">Full Stack Development</p>
+
+                <p>
+                  My full stack skills encompass both frontend and backend
+                  development, demonstrated in projects where I've created
+                  several dynamic web applications.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+              <div style={{ width: "15%", height: "100%" }}>
+                <img src="dsa.png" />
+              </div>
+              <div className="ml-4 flex-1">
+                <p className="font-semibold">Data Analytics</p>
+
+                <p>
+                  I have a strong ability to analyze social media data and use
+                  data mining techniques to derive valuable insights. My
+                  expertise also includes improving decision making through
+                  analytics-driven strategies
+                </p>
+              </div>
             </div>
           </div>
         </div>
