@@ -659,7 +659,7 @@ export default function Home() {
 
                 <p>
                   My full stack skills encompass both frontend and backend
-                  development, demonstrated in projects where I've created
+                  development, demonstrated in projects where I developed
                   several dynamic web applications.
                 </p>
               </div>
