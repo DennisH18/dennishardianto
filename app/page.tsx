@@ -25,8 +25,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Switch } from "@/components/ui/switch";
-import { useTheme } from "next-themes"
-
+import { useTheme } from "next-themes";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -44,7 +43,6 @@ export default function Home() {
   const [showMore, setShowMore] = useState(false);
   const { setTheme } = useTheme();
 
-
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -57,7 +55,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
 
   const handleThemeChange = () => {
-    const newTheme = darkMode ? 'light' : 'dark';
+    const newTheme = darkMode ? "light" : "dark";
     setDarkMode(!darkMode);
     setTheme(newTheme);
   };
@@ -232,11 +230,14 @@ export default function Home() {
               </a>
             </li>
             <li className="flex flex-row px-2 text-white">
-              <TbSun className="mt-[2px]"/>
-              <Switch checked={darkMode} onCheckedChange={handleThemeChange} className="mx-2"/>
-              <TbMoon className="mt-[2px]"/>
+              <TbSun className="mt-[2px]" />
+              <Switch
+                checked={darkMode}
+                onCheckedChange={handleThemeChange}
+                className="mx-2"
+              />
+              <TbMoon className="mt-[2px]" />
             </li>
-            
           </ul>
         </div>
         <div className="absolute bottom-4 left-0 right-0 pb-4">
@@ -287,7 +288,7 @@ export default function Home() {
           className="min-h-screen flex flex-col"
         >
           <div className="w-[70%] ml-[10%] mt-32 relative">
-            <div className="flex items-center text-blue-500 text-2xl z-30">
+            <div className="flex items-center text-blue-500 text-2xl z-50 relative">
               <AiOutlineCode className="mr-2" />
               <h2 className="font-mono">Intro</h2>
             </div>
@@ -304,10 +305,10 @@ export default function Home() {
             </h2>
             <img
               src="intro-img.png"
-              className="absolute z-20 right-[-40px] top-[-50px]"
+              className="absolute right-[-40px] top-[-50px] opacity-50"
               width={600}
             />
-            <hr className="border-2 border-slate-900 z-20 mt-4"></hr>
+            <hr className="border-2 border-slate-900 z-30 relative mt-4"></hr>
             <div className="w-[50%] mt-4 text-slate-900">
               <div className="flex items-center">
                 <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
@@ -468,14 +469,83 @@ export default function Home() {
             <ol className="relative border-s-4 border-slate-700">
               <li className="mb-10 ms-6">
                 <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
+                  <img src="cofco.png" alt="Your Logo" width={30} />
+                </div>
+                <div className="ml-6">
+                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
+                    Analyst Intern
+                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded light:bg-blue-900 dark:text-blue-300 ms-3">
+                      Latest
+                    </span>
+                  </h3>
+                  <div className="flex flex-row justify-between mb-2">
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      COFCO International
+                    </time>
+
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      August 2024 - February 2025
+                    </time>
+                  </div>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Collaborated with traders and operations teams to
+                    understand workflow requirements, identifying opportunities
+                    for process improvement and automation, resulted in an
+                    increase in operational efficiency in commodity trading.
+                  </p>
+                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Developed and maintained Python applications to automate
+                    data analysis and reporting tasks, reducing manual
+                    processing time and enhancing accuracy of commodity price
+                    monitoring and risk management.
+                  </p>
+                </div>
+              </li>
+              <li className="mb-10 ms-6">
+                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
+                  <img src="marymount.png" alt="Your Logo" width={30} />
+                </div>
+                <div className="ml-6">
+                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
+                    Software Engineering Intern
+                  </h3>
+                  <div className="flex flex-row justify-between mb-2">
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      Marymount Labs
+                    </time>
+
+                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                      May 2024 - August 2024
+                    </time>
+                  </div>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Spearheaded development of robust and scalable backend
+                    architectures with Redis, Flask, and Streamlit for digital
+                    health solutions, implementing end-to-end systems for
+                    preventive health campaigns and patient stratification.
+                  </p>
+                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Engineered front-end assets leveraging Next.js and
+                    Tailwind, created secured digital forms for clinical
+                    operations, streamlining processes and enhancing
+                    presentation of digital health solutions.
+                  </p>
+                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    • Conducted statistical analysis research for vaccination
+                    interventions using Python to developed an automated
+                    screening tool, and performed ad-hoc data analysis projects,
+                    improving data-driven decision-making in medical
+                    institutions.
+                  </p>
+                </div>
+              </li>
+              <li className="mb-10 ms-6">
+                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
                   <img src="adi.png" alt="Your Logo" width={30} />
                 </div>
                 <div className="ml-6">
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
                     Software Engineer
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded light:bg-blue-900 dark:text-blue-300 ms-3">
-                      Latest
-                    </span>
                   </h3>
                   <div className="flex flex-row justify-between mb-2">
                     <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
