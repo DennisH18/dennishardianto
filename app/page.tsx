@@ -52,13 +52,13 @@ export default function Home() {
     contentRefs[item].current!.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
 
-  const handleThemeChange = () => {
-    const newTheme = darkMode ? "light" : "dark";
-    setDarkMode(!darkMode);
-    setTheme(newTheme);
-  };
+  // const handleThemeChange = () => {
+  //   const newTheme = darkMode ? "light" : "dark";
+  //   setDarkMode(!darkMode);
+  //   setTheme(newTheme);
+  // };
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY + 150; // Add some offset to the scroll position
@@ -229,7 +229,7 @@ export default function Home() {
                 Skills
               </a>
             </li>
-            <li className="flex flex-row px-2 text-white">
+            {/* <li className="flex flex-row px-2 text-white">
               <TbSun className="mt-[2px]" />
               <Switch
                 checked={darkMode}
@@ -237,7 +237,7 @@ export default function Home() {
                 className="mx-2"
               />
               <TbMoon className="mt-[2px]" />
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="absolute bottom-4 left-0 right-0 pb-4">
