@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import {
   AiOutlineMenu,
   AiOutlineClose,
@@ -15,7 +14,7 @@ import {
   AiOutlineBulb,
 } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
-import { TbSchool, TbBooks, TbMoon, TbSun } from "react-icons/tb";
+import { TbSchool, TbBooks } from "react-icons/tb";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -24,8 +23,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Switch } from "@/components/ui/switch";
-import { useTheme } from "next-themes";
+import { useCallback } from "react";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -41,7 +39,6 @@ export default function Home() {
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const { setTheme } = useTheme();
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -51,19 +48,20 @@ export default function Home() {
     setSelectedItem(item);
     contentRefs[item].current!.scrollIntoView({ behavior: "smooth" });
   };
-
-  // const [darkMode, setDarkMode] = useState(false);
-
-  // const handleThemeChange = () => {
-  //   const newTheme = darkMode ? "light" : "dark";
-  //   setDarkMode(!darkMode);
-  //   setTheme(newTheme);
-  // };
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY + 150; // Add some offset to the scroll position
+  const throttle = (func: Function, wait: number) => {
+    let lastCall = 0;
+    return (...args: any) => {
+      const now = new Date().getTime();
+      if (now - lastCall >= wait) {
+        lastCall = now;
+        func(...args);
+      }
+    };
+  };
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + 150;
     const sections = Object.keys(contentRefs);
-
+  
     for (let section of sections) {
       const ref = contentRefs[section];
       if (
@@ -74,7 +72,15 @@ export default function Home() {
         break;
       }
     }
-  };
+  }, [contentRefs]);
+  
+  useEffect(() => {
+    const throttledHandleScroll = throttle(handleScroll, 100); // 100ms throttle
+    window.addEventListener("scroll", throttledHandleScroll);
+    return () => {
+      window.removeEventListener("scroll", throttledHandleScroll);
+    };
+  }, [handleScroll]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -229,15 +235,6 @@ export default function Home() {
                 Skills
               </a>
             </li>
-            {/* <li className="flex flex-row px-2 text-white">
-              <TbSun className="mt-[2px]" />
-              <Switch
-                checked={darkMode}
-                onCheckedChange={handleThemeChange}
-                className="mx-2"
-              />
-              <TbMoon className="mt-[2px]" />
-            </li> */}
           </ul>
         </div>
         <div className="absolute bottom-4 left-0 right-0 pb-4">
@@ -336,7 +333,7 @@ export default function Home() {
                   }}
                 >
                   <AiFillFileText className="mr-2" />
-                  Resume
+                  Download Resume
                 </button>
               </div>
             </div>
@@ -356,9 +353,9 @@ export default function Home() {
               </span>
             </button>
             {showMore && (
-              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2 shadow-xl">
+              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2 shadow-xl relative z-10">
                 <p className="mt-4 text-slate-900 AiOutlineCaretUp">
-                  I am a final year student at the Singapore Management
+                  I am a Graduate from Singapore Management
                   University, studying Bachelor of Information Systems
                 </p>
                 <p className="mt-4 text-slate-900">
