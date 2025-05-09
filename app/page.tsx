@@ -61,7 +61,7 @@ export default function Home() {
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY + 150;
     const sections = Object.keys(contentRefs);
-  
+
     for (let section of sections) {
       const ref = contentRefs[section];
       if (
@@ -73,7 +73,7 @@ export default function Home() {
       }
     }
   }, [contentRefs]);
-  
+
   useEffect(() => {
     const throttledHandleScroll = throttle(handleScroll, 100); // 100ms throttle
     window.addEventListener("scroll", throttledHandleScroll);
@@ -137,30 +137,29 @@ export default function Home() {
         "Dedicated platform for University Students forum and Statistics in Singapore",
       tags: ["react.png", "firebase.png", "js.png", "bs.png", "node.png"],
     },
-    {
-      src: "dm.png",
-      title: "Hotel Satisfaction Analysis",
-      description:
-        "Data Mining and Business Analytics for Hotel Reviews and Satisfaction ",
-      tags: ["python.png", "pandas.png", "numpy.png", "seaborn.png", "mpl.png"],
-    },
   ];
-
+  const navItems = [
+    { id: "introduction", label: "Introduction" },
+    { id: "education", label: "Education" },
+    { id: "experience", label: "Experience" },
+    { id: "projects", label: "Projects" },
+    { id: "skills", label: "Skills" },
+  ];
   return (
     <div className="flex">
       <div
-        className={`bg-slate-900 shadow-lg rounded-lg p-6 fixed m-2 top-0 left-0 z-50 ${
+        className={`bg-slate-900 shadow-lg rounded-lg p-6 fixed m-1 top-0 left-0 z-50 ${
           isMenuOpen
             ? "block w-full animate-expand-left-to-right"
             : "hidden sm:block"
         }`}
-        style={{ height: "calc(100% - 1rem)" }}
+        style={{ height: "calc(100% - 0.5rem)" }}
       >
-        <div className="flex justify-center items-center mb-2">
+        {/* <div className="flex justify-center items-center mb-2">
           <img src={"logo-white.png"} width={40} height={50} alt="logo" />
-        </div>
+        </div> */}
 
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center mb-4 mt-4">
           <img
             src={"profile.png"}
             width={60}
@@ -173,77 +172,67 @@ export default function Home() {
           </p>
         </div>
         <hr className="border-slate-700 mb-6"></hr>
+
+        {/* Sidebar */}
+
         <div>
           <ul>
-            <li
-              className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "introduction"
-                  ? "bg-slate-700 animate-expand-left-to-right"
-                  : ""
-              }`}
-              onClick={() => handleItemClick("introduction")}
-            >
-              <a href="#introduction" className="text-white">
-                Introduction
-              </a>
-            </li>
-            <li
-              className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "education"
-                  ? "bg-slate-700 animate-expand-left-to-right"
-                  : ""
-              }`}
-              onClick={() => handleItemClick("education")}
-            >
-              <a href="#education" className="text-white">
-                Education
-              </a>
-            </li>
-            <li
-              className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "experience"
-                  ? "bg-slate-700 animate-expand-left-to-right"
-                  : ""
-              }`}
-              onClick={() => handleItemClick("experience")}
-            >
-              <a href="#experience" className="text-white">
-                Experience
-              </a>
-            </li>
-            <li
-              className={`mb-2 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "projects"
-                  ? "bg-slate-700 animate-expand-left-to-right"
-                  : ""
-              }`}
-              onClick={() => handleItemClick("projects")}
-            >
-              <a href="#projects" className="text-white">
-                Projects
-              </a>
-            </li>
-            <li
-              className={`mb-6 p-2 hover:bg-slate-800 rounded-lg ${
-                selectedItem === "skills"
-                  ? "bg-slate-700 animate-expand-left-to-right"
-                  : ""
-              }`}
-              onClick={() => handleItemClick("skills")}
-            >
-              <a href="#skills" className="text-white">
-                Skills
-              </a>
-            </li>
+            {navItems.map(({ id, label }) => (
+              <li key={id} onClick={() => handleItemClick(id)}>
+                <button
+                  key={selectedItem === id ? `selected-${id}` : id}
+                  className={`flex overflow-hidden p-10 mb-4 items-center text-white h-9 px-4 py-2 w-full justify-between rounded-md relative group transition-all duration-300 ease-out
+                  ${
+                    selectedItem === id
+                      ? "ring-1 ring-white"
+                      : "hover:ring-1 hover:ring-offset-2 hover:shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+                  }
+                `}
+                >
+                  {/* Shine swipe */}
+                  <span
+                    key={`shine-${id}-${selectedItem === id ? "play" : "idle"}`}
+                    className={`absolute right-0 -mt-12 h-32 w-8 bg-white rotate-12 opacity-10
+                      ${
+                        selectedItem === id
+                          ? "shine-animate block"
+                          : "shine-hover hidden group-hover:block"
+                      }
+                    `}
+                  />
+
+                  <div className="flex items-center">
+                    <span>{label}</span>
+                  </div>
+
+                  <div className="ml-2 flex items-center gap-1 text-sm">
+                    <svg
+                      className="w-4 h-4 text-gray-500 transition-all duration-300 group-hover:text-yellow-300"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        clipRule="evenodd"
+                        fillRule="evenodd"
+                        d="M10.788 3.21c.448-1.077..."
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="absolute bottom-4 left-0 right-0 pb-4">
-          <div className="flex justify-center items-center">
+
+        {/* Socials */}
+
+        <div className="absolute bottom-0 left-0 right-0 p-3 m-2 px-6 rounded-lg bg-slate-800/60 backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+          <div className="flex justify-center items-center space-x-6">
             <a
               href="https://www.linkedin.com/in/dennis-hardianto-196729218/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mr-6 hover:scale-110"
+              className="transition-transform duration-300 hover:scale-110 hover:brightness-125"
             >
               <img src="linkedin.svg" width={22} alt="LinkedIn" />
             </a>
@@ -251,7 +240,7 @@ export default function Home() {
               href="https://github.com/DennisH18"
               target="_blank"
               rel="noopener noreferrer"
-              className="mr-6 hover:scale-110"
+              className="transition-transform duration-300 hover:scale-110 hover:brightness-125"
             >
               <img src="github.png" width={22} alt="GitHub" />
             </a>
@@ -259,7 +248,7 @@ export default function Home() {
               href="mailto:dennis18hardianto@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:scale-110"
+              className="transition-transform duration-300 hover:scale-110 hover:brightness-125"
             >
               <img src="gmail.png" width={22} alt="Email" />
             </a>
@@ -278,14 +267,18 @@ export default function Home() {
         )}
       </button>
 
-      <div className="flex flex-col flex-1 lg:ml-72 md:ml-72 mt-2">
+      <div className="flex flex-col flex-2 lg:ml-72 md:ml-72 mt-2">
+
+      {/* Introduction Page */}
+
+
         <div
           ref={contentRefs.introduction}
           id="introduction"
           className="min-h-screen flex flex-col"
         >
-          <div className="w-[70%] ml-[10%] mt-32 relative">
-            <div className="flex items-center text-blue-500 text-2xl z-50 relative">
+          <div className="w-[80%] ml-[5%] mt-24 relative">
+            <div className="flex items-center text-blue-500 text-2xl z-20 relative">
               <AiOutlineCode className="mr-2" />
               <h2 className="font-mono">Intro</h2>
             </div>
@@ -355,8 +348,8 @@ export default function Home() {
             {showMore && (
               <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2 shadow-xl relative z-10">
                 <p className="mt-4 text-slate-900 AiOutlineCaretUp">
-                  I am a Graduate from Singapore Management
-                  University, studying Bachelor of Information Systems
+                  I am a Graduate from Singapore Management University, studying
+                  Bachelor of Information Systems
                 </p>
                 <p className="mt-4 text-slate-900">
                   I am passionate about technology and its potential to solve
@@ -367,6 +360,8 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Education Section */}
         <div
           ref={contentRefs.education}
           id="education"
@@ -470,7 +465,7 @@ export default function Home() {
                 </div>
                 <div className="ml-6">
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Analyst Intern
+                    Analyst
                     <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded light:bg-blue-900 dark:text-blue-300 ms-3">
                       Latest
                     </span>

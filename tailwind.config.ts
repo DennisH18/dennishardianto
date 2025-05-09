@@ -24,6 +24,8 @@ const config: Config = {
       animation: {
         'expand-left-to-right': 'expand-left-to-right 0.5s ease',
         'expand': 'expand 0.5s ease-in-out',
+        'gradient-x': 'gradient-x 3s ease infinite',
+
       },
       keyframes: {
         'expand-left-to-right': {
@@ -33,6 +35,10 @@ const config: Config = {
         'expand': {
           from: { transform: 'scaleY(0)', transformOrigin: 'top' },
           to: { transform: 'scaleY(1)', transformOrigin: 'top' },
+        },
+        'gradient-x': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
       },
     },
