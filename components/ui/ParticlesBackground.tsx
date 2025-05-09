@@ -59,7 +59,7 @@ const ParticlesBackground = () => {
   return (
     <Particles
       id="tsparticles"
-      className="absolute inset-0 w-full h-full -z-50"
+      className="absolute inset-0 w-full h-full -z-10"
       options={options}
     />
   );
