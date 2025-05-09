@@ -273,15 +273,12 @@ export default function Home() {
       <div className="flex flex-col flex-2 lg:ml-72 md:ml-72 mt-2">
 
       {/* Introduction Page */}
-      <ParticlesBackground />
-
-
-        <div
-          ref={contentRefs.introduction}
-          id="introduction"
-          className="min-h-screen flex flex-col"
+      <div
+        ref={contentRefs.introduction}
+        id="introduction"
+        className="relative overflow-hidden min-h-screen flex flex-col"
         >
-            <ParticlesBackground />
+        <ParticlesBackground />
 
           <div className="w-[80%] ml-[5%] mt-24 relative">
             <div className="flex items-center text-blue-500 text-2xl z-20 relative">
@@ -301,7 +298,7 @@ export default function Home() {
             </h2>
             <img
               src="intro-img.png"
-              className="absolute right-[-40px] top-[-50px] opacity-50"
+              className="absolute right-[-40px] top-[-50px] opacity-10"
               width={600}
             />
             <hr className="border-2 border-slate-900 z-30 relative mt-4"></hr>
@@ -371,8 +368,10 @@ export default function Home() {
         <div
           ref={contentRefs.education}
           id="education"
-          className="min-h-screen"
-        >
+          className="relative overflow-hidden min-h-screen flex flex-col"
+          >
+          <ParticlesBackground />
+
           <div className="w-[80%] ml-[10%] relative mt-24">
             <div className="flex items-center text-blue-500 text-2xl z-30">
               <TbSchool className="mr-2" />
