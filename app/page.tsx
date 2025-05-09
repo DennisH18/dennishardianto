@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/carousel";
 import { useCallback } from "react";
 // import ParticleRing from "@/components/ui/particles";
+import ParticlesBackground from '@/components/ui/ParticlesBackground';
 
 
 export default function Home() {
@@ -272,6 +273,7 @@ export default function Home() {
       <div className="flex flex-col flex-2 lg:ml-72 md:ml-72 mt-2">
 
       {/* Introduction Page */}
+      <ParticlesBackground />
 
 
         <div
@@ -279,6 +281,8 @@ export default function Home() {
           id="introduction"
           className="min-h-screen flex flex-col"
         >
+            <ParticlesBackground />
+
           <div className="w-[80%] ml-[5%] mt-24 relative">
             <div className="flex items-center text-blue-500 text-2xl z-20 relative">
               <AiOutlineCode className="mr-2" />
