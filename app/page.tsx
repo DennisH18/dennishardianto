@@ -12,21 +12,20 @@ import {
   AiFillPlayCircle,
   AiOutlineLaptop,
   AiOutlineBulb,
+  AiOutlineCopy,
+  AiOutlineCopyright,
 } from "react-icons/ai";
-import { TypeAnimation } from "react-type-animation";
-import { TbSchool, TbBooks } from "react-icons/tb";
+import { TbBriefcase, TbCopy } from "react-icons/tb";
 import Autoplay from "embla-carousel-autoplay";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { useCallback } from "react";
-// import ParticleRing from "@/components/ui/particles";
-import ParticlesBackground from '@/components/ui/ParticlesBackground';
+import ParticlesBackground from "@/components/ui/ParticlesBackground";
+import { motion, AnimatePresence } from "framer-motion";
+import { TbHeartHandshake } from "react-icons/tb";
 
+function IpadModel() {
+  const { scene } = useGLTF("/models/ipad_pro_2020.glb");
+  return <primitive object={scene} />;
+}
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -61,6 +60,7 @@ export default function Home() {
       }
     };
   };
+
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY + 150;
     const sections = Object.keys(contentRefs);
@@ -68,15 +68,22 @@ export default function Home() {
     for (let section of sections) {
       const ref = contentRefs[section];
       if (
-        ref.current!.offsetTop <= scrollPosition &&
-        ref.current!.offsetTop + ref.current!.clientHeight > scrollPosition
+        ref.current &&
+        ref.current.offsetTop <= scrollPosition &&
+        ref.current.offsetTop + ref.current.clientHeight > scrollPosition
       ) {
         setSelectedItem(section);
         break;
       }
     }
   }, [contentRefs]);
+  const [showLine, setShowLine] = useState(false);
 
+  useEffect(() => {
+    setShowLine(false);
+    const timeout = setTimeout(() => setShowLine(true), 100);
+    return () => clearTimeout(timeout);
+  }, []);
   useEffect(() => {
     const throttledHandleScroll = throttle(handleScroll, 100); // 100ms throttle
     window.addEventListener("scroll", throttledHandleScroll);
@@ -97,77 +104,148 @@ export default function Home() {
   };
 
   const plugin = React.useRef(Autoplay({ delay: 2000 }));
+  const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = (value: string) => {
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 5000);
+  };
+  const handleCopyPhone = (value: string) => {
+    navigator.clipboard.writeText(value);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 5000);
+  };
 
   const projects = [
     {
-      src: "satpai.png",
+      src: ["Satelilit-1.png", "Satelilit-2.png", "Satelilit-3.png"],
       title: "Satelilit.ai",
       description:
-        "Develop Housing Valuation Analysis with Advanced Machine Learning Algorithms",
+        "Built an ML-powered platform for housing valuation, leveraging geospatial data and advanced regression models to predict property prices with high accuracy.",
       tags: ["next.png", "fast.png", "pandas.png", "pytorch.png", "maps.png"],
     },
     {
-      src: "gw.png",
-      title: "Glasswindow",
+      src: ["BB-1.png", "BB-2.png", "BB-3.png"],
+      title: "BoschBoard",
       description:
-        "One stop internal Hiring platform built on Test Driven Development and CI/CD",
-      tags: [
-        "cypress.png",
-        "supabase.png",
-        "pytest.png",
-        "fast.png",
-        "vercel.png",
+        "Created a real-time analytics dashboard for Bosch tool monitoring, winning finalist position at Deep Learning Week 2024 with anomaly detection and performance insights.",
+      tags: ["next.png", "fast.png", "pandas.png", "pytorch.png", "maps.png"],
+    },
+    {
+      src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
+      title: "Financial Analytics Dashboard",
+      description:
+        "Engineered an automated dashboard for financial reporting, enabling streamlined Balance Sheet and P&L analysis with dynamic visualizations and automated Reporting.",
+      tags: ["python.png", "supabase.png", "pandas.png", "google.png"],
+    },
+  ];
+
+  const navItems = [
+    { id: "introduction", label: "Introduction", icon: <AiOutlineCode /> },
+    // { id: "education", label: "Education", icon: <TbSchool /> },
+    { id: "experience", label: "Experience", icon: <TbBriefcase /> },
+    { id: "projects", label: "Projects", icon: <AiOutlineLaptop /> },
+    { id: "skills", label: "Skills", icon: <AiOutlineBulb /> },
+    { id: "interests", label: "Interests", icon: <TbHeartHandshake /> },
+  ];
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const experiences = [
+    {
+      title: "Analyst",
+      company: "COFCO International",
+      time: "2024 - Present",
+      badge: "Latest",
+      logo: "cofco.png",
+      summary: [
+        "Optimize end-to-end commodity workflows, identifying automation opportunities that enhanced trade execution and reduced manual effort.",
+        "Developed and maintained Python applications to automate data analysis and reporting tasks, improving accuracy of commodity price monitoring.",
+      ],
+      skills: [
+        "Python",
+        "SQL",
+        "Financial Modelling",
+        "Data Analysis",
+        "Excel",
+        "Data Visualization",
       ],
     },
     {
-      src: "itsa.png",
-      title: "IT Solution Architecture",
-      description:
-        "Secure Authentication System and database architecture built on AWS cloud services",
-      tags: ["aws.png", "react.png", "cog.png", "jwt.png", "sass.png"],
+      title: "Software Engineering Intern",
+      company: "Marymount Labs",
+      time: "May - August 2024",
+      logo: "marymount.png",
+      summary: [
+        "Engineered Full stack systems using Redis, Flask, and JS for digital health platforms.",
+        "Performed statistical analysis for vaccination campaigns and built Python tools to improve healthcare decision-making.",
+      ],
+      skills: ["Python", "Flask", "Redis", "Next.js"],
     },
     {
-      src: "esd.png",
-      title: "Leave Management System",
-      description:
-        "Platform for Leave Management built on Microservices architecture",
-      tags: ["vue.png", "docker.png", "rmq.png", "kong.png", "pp.png"],
+      title: "Software Engineer",
+      company: "Aboitiz Data Innovation",
+      time: "January - April 2024",
+      logo: "adi.png",
+      summary: [
+        "Developed real estate valuation platform using FastAPI and Next.js on Digital Ocean.",
+        "Achieved ~9% MAPE in ML-based price predictions.",
+      ],
+      link: "https://satelilit.vercel.app/",
+      skills: ["FastAPI", "Next.js", "Machine Learning", "Data Analysis"],
     },
     {
-      src: "wad.png",
-      title: "Unihelp",
-      description:
-        "Dedicated platform for University Students forum and Statistics in Singapore",
-      tags: ["react.png", "firebase.png", "js.png", "bs.png", "node.png"],
+      title: "Product Management Intern",
+      company: "VFlowTech",
+      time: "May - Nov 2023",
+      logo: "https://vflowtech.com/wp-content/uploads/2021/10/VFT-Logo-PNG.png",
+      summary: [
+        "Led product planning, execution, and cross-functional coordination.",
+        "Engaged stakeholders to resolve roadblocks and maintain progress reporting.",
+      ],
+      skills: [
+        "Agile Methodologies",
+        "Stakeholder Management",
+        "Cross-Functional Collaboration",
+        "Data Analysis",
+      ],
     },
   ];
-  const navItems = [
-    { id: "introduction", label: "Introduction" },
-    { id: "education", label: "Education" },
-    { id: "experience", label: "Experience" },
-    { id: "projects", label: "Projects" },
-    { id: "skills", label: "Skills" },
-  ];
+
   return (
     <div className="flex">
       <div
-        className={`bg-slate-900 shadow-lg rounded-lg p-6 fixed m-1 top-0 left-0 z-50 ${
+        className={`bg-gradient-to-b from-slate-950 to-slate-900 shadow-lg p-6 fixed z-50 ${
           isMenuOpen
-            ? "block w-full animate-expand-left-to-right"
-            : "hidden sm:block"
+            ? "block w-full animate-expand-left-to-right h-[100%]"
+            : "hidden sm:block rounded-lg h-[99%] m-1"
         }`}
-        style={{ height: "calc(100% - 0.5rem)" }}
       >
-        {/* <div className="flex justify-center items-center mb-2">
-          <img src={"logo-white.png"} width={40} height={50} alt="logo" />
-        </div> */}
+        {/* Sidebar */}
 
         <div className="flex justify-center items-center mb-4 mt-4">
           <img
             src={"profile.png"}
             width={60}
             height={70}
-            className="rounded-full"
+            className="rounded-full  shadow-[0_0_15px_rgba(0,200,255,0.4)]"
             alt="Profile Picture"
           />
           <p className="text-white text-md ml-4 font-semibold">
@@ -176,11 +254,9 @@ export default function Home() {
         </div>
         <hr className="border-slate-700 mb-6"></hr>
 
-        {/* Sidebar */}
-
         <div>
           <ul>
-            {navItems.map(({ id, label }) => (
+            {navItems.map(({ id, label, icon }) => (
               <li key={id} onClick={() => handleItemClick(id)}>
                 <button
                   key={selectedItem === id ? `selected-${id}` : id}
@@ -205,6 +281,15 @@ export default function Home() {
                   />
 
                   <div className="flex items-center">
+                    <span
+                      className={`text-lg mr-2 transition-all duration-300 ${
+                        selectedItem === id
+                          ? "text-blue-500 filter drop-shadow-[0_0_5px_rgba(59,130,246,0.8)]"
+                          : "text-white"
+                      }`}
+                    >
+                      {icon}
+                    </span>
                     <span>{label}</span>
                   </div>
 
@@ -229,7 +314,7 @@ export default function Home() {
 
         {/* Socials */}
 
-        <div className="absolute bottom-0 left-0 right-0 p-3 m-2 px-6 rounded-lg bg-slate-800/60 backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+        <div className="absolute bottom-0 left-0 right-0 p-3 m-2 px-6 rounded-lg backdrop-blur-md">
           <div className="flex justify-center items-center space-x-6">
             <a
               href="https://www.linkedin.com/in/dennis-hardianto-196729218/"
@@ -248,7 +333,7 @@ export default function Home() {
               <img src="github.png" width={22} alt="GitHub" />
             </a>
             <a
-              href="mailto:dennis18hardianto@gmail.com"
+              href="mailto:dennis.hardianto@outlook.com"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-transform duration-300 hover:scale-110 hover:brightness-125"
@@ -264,438 +349,305 @@ export default function Home() {
         onClick={handleToggleMenu}
       >
         {isMenuOpen ? (
-          <AiOutlineClose className="w-6 h-6 cursor-pointer" />
+          <AiOutlineClose className="w-6 h-6 cursor-pointer text-white" />
         ) : (
           <AiOutlineMenu className="w-6 h-6 cursor-pointer" />
         )}
       </button>
 
       <div className="flex flex-col flex-2 lg:ml-72 md:ml-72 mt-2">
-
-      {/* Introduction Page */}
-      <div
-        ref={contentRefs.introduction}
-        id="introduction"
-        className="relative overflow-hidden min-h-screen flex flex-col"
+        {/* Introduction Page */}
+        <div
+          ref={contentRefs.introduction}
+          id="introduction"
+          className="relative overflow-hidden min-h-screen flex flex-col"
         >
-        <ParticlesBackground />
+          <ParticlesBackground />
 
-          <div className="w-[80%] ml-[5%] mt-24 relative">
+          <div className="w-[85%] ml-[5%] mt-24 relative">
             <div className="flex items-center text-blue-500 text-2xl z-20 relative">
               <AiOutlineCode className="mr-2" />
               <h2 className="font-mono">Intro</h2>
             </div>
-            <h2 className="font-mono text-5xl text-slate-900 text-start relative z-30 mt-2">
-              <TypeAnimation
-                sequence={[
-                  "Hi I'm Dennis, aspiring software engineer and data analyst",
-                  1000,
-                ]}
-                wrapper="span"
-                speed={50}
-                repeat={Infinity}
-              />
+            <h2 className="text-5xl font-semibold leading-tight font-sans tracking-tight">
+              Hi, I'm Dennis,<br></br>
+              Business Intelligence & Data Analyst
             </h2>
             <img
               src="intro-img.png"
-              className="absolute right-[-40px] top-[-50px] opacity-10"
-              width={600}
+              className="absolute right-[-40px] top-[-50px] opacity-5"
+              width={800}
             />
             <hr className="border-2 border-slate-900 z-30 relative mt-4"></hr>
-            <div className="w-[50%] mt-4 text-slate-900">
-              <div className="flex items-center">
-                <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
-                  <AiOutlineMail className="text-blue-500" />
+
+            <div className="relative w-full md:w-[60%] mt-10 p-6 rounded-2xl border border-white/10 bg-white/1 backdrop-blur-md shadow-xl hover:shadow-[0_0_60px_rgba(59,130,246,0.5)] transition-all duration-500">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-10">
+                {/* Email */}
+                <div className="flex items-center">
+                  <div className="border-2 border-blue-500 p-2 rounded-lg mr-3">
+                    <AiOutlineMail className="text-blue-500" />
+                  </div>
+                  <p className="mr-2">Dennis.hardianto@outlook.com</p>
+
+                  <button
+                    onClick={() =>
+                      handleCopyEmail("dennis.hardianto@outlook.com")
+                    }
+                    className="relative group"
+                  >
+                    <TbCopy className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors duration-300" />
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs text-white bg-slate-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                      {copied ? "Copied!" : "Copy"}
+                    </div>
+                  </button>
                 </div>
-                <p>dennis18hardianto@gmail.com</p>
-              </div>
-              <div className="flex items-center mt-2">
-                <div className="border-2 border-blue-500 p-1 rounded-xl mr-2">
-                  <AiOutlinePhone className="text-blue-500" />
+
+                {/* Phone */}
+                <div className="flex items-center">
+                  <div className="border-2 border-blue-500 p-2 rounded-lg mr-3">
+                    <AiOutlinePhone className="text-blue-500" />
+                  </div>
+                  <p className="mr-2">+65 8197 4871</p>
+                  <button
+                    onClick={() => handleCopyPhone("+65 81974871")}
+                    className="relative group"
+                  >
+                    <TbCopy className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors duration-300" />
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs text-white bg-slate-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                      {copiedPhone ? "Copied!" : "Copy"}
+                    </div>
+                  </button>
                 </div>
-                <p>+65 8197 4871</p>
               </div>
-            </div>
-            <div className="w-[50%] mt-4">
-              <div className="flex items-center">
+
+              {/* Resume Button */}
+              <div className="mt-6">
                 <button
-                  className="rounded-2xl px-4 p-1 flex items-center bg-transparent border-blue-500 border-2 hover:bg-blue-500 text-blue-500 hover:text-white"
+                  className="group flex items-center mb-8 border-2 border-blue-500 text-blue-500 rounded-lg px-4 py-2 hover:bg-blue-500 hover:text-white transition-all duration-300"
                   onClick={() => {
-                    const url = "Resume Dennis Hardianto.pdf"; // Replace with actual URL
+                    const url = "Resume Dennis Hardianto.pdf";
                     const anchor = document.createElement("a");
                     anchor.href = url;
                     anchor.download = "Resume Dennis Hardianto.pdf";
                     anchor.click();
                   }}
                 >
-                  <AiFillFileText className="mr-2" />
+                  <AiFillFileText className="mr-2 group-hover:translate-x-1 transition-transform" />
                   Download Resume
                 </button>
               </div>
-            </div>
-            <button
-              className={`text-start mt-4 flex items-center hover:text-blue-500 ${
-                showMore ? "text-blue-500" : "text-slate-500"
-              }`}
-              onClick={toggleShowMore}
-            >
-              Read More
-              <span
-                className={`ml-2 transition-transform transform ${
-                  showMore ? "rotate-180" : "rotate-0"
+
+              {/* Read More Toggle */}
+              <button
+                className={`mt-4 flex items-center font-medium transition-colors ${
+                  showMore
+                    ? "text-blue-500"
+                    : "text-slate-400 hover:text-blue-500"
                 }`}
+                onClick={toggleShowMore}
+                type="button"
               >
-                <AiOutlineCaretDown />
-              </span>
-            </button>
-            {showMore && (
-              <div className="w-[50%] bg-slate-50 p-4 animate-expand rounded-lg mt-2 shadow-xl relative z-10">
-                <p className="mt-4 text-slate-900 AiOutlineCaretUp">
-                  I am a Graduate from Singapore Management University, studying
-                  Bachelor of Information Systems
-                </p>
-                <p className="mt-4 text-slate-900">
-                  I am passionate about technology and its potential to solve
-                  real-world problems. I have experience in software
-                  development, data analysis, and machine learning.
-                </p>
-              </div>
-            )}
+                Read More
+                <span
+                  className={`ml-2 transform transition-transform ${
+                    showMore ? "rotate-180" : "rotate-0"
+                  }`}
+                >
+                  <AiOutlineCaretDown />
+                </span>
+              </button>
+
+              {/* Expanded Text */}
+              <AnimatePresence initial={false}>
+                {showMore && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="mt-4 overflow-hidden rounded-xl text-slate-900 text-sm"
+                  >
+                    <p className="mb-4">
+                      I am a graduate from{" "}
+                      <strong>Singapore Management University</strong>, majoring
+                      in <strong>Information Systems</strong> with a dual focus
+                      in <strong>Business Analytics</strong> and{" "}
+                      <strong>Digitalization</strong>.
+                    </p>
+                    <p className="mb-4">
+                      Over the past few years, I’ve developed hands-on
+                      experience in <strong>data-driven problem solving</strong>
+                      , <strong>full-stack development</strong>, and building
+                      robust digital solutions across industries like{" "}
+                      <strong>finance</strong>, <strong>healthtech</strong>, and{" "}
+                      <strong>IT</strong>.
+                    </p>
+                    <p>
+                      I’m passionate about designing{" "}
+                      <strong>intelligent systems</strong> that bridge technical
+                      depth with business impact. Whether I’m building
+                      dashboards for{" "}
+                      <strong>real-time commodity tracking</strong>, engineering{" "}
+                      <strong>backend architectures</strong> for clinical
+                      workflows, or applying <strong>machine learning</strong>{" "}
+                      to pricing models, I care about creating tools that{" "}
+                      <strong>empower decisions</strong> and{" "}
+                      <strong>scale with purpose</strong>.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
-        {/* Education Section */}
-        <div
-          ref={contentRefs.education}
-          id="education"
-          className="relative overflow-hidden min-h-screen flex flex-col"
-          >
-          <ParticlesBackground />
+        {/* Experience Section */}
 
-          <div className="w-[80%] ml-[10%] relative mt-24">
-            <div className="flex items-center text-blue-500 text-2xl z-30">
-              <TbSchool className="mr-2" />
-              <h2 className="font-mono">Education</h2>
-            </div>
-            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
-              <div style={{ width: "15%", height: "100%" }}>
-                <img src="smu.png" className="w-full h-full object-cover" />
-              </div>
-              <div className="ml-4 flex-1">
-                <p className="font-semibold">Singapore Management University</p>
-                <div className="flex items-center mt-2 text-slate-500">
-                  <div className="mr-2">
-                    <AiFillCalendar />
-                  </div>
-                  <p>2021 - 2024</p>
-                </div>
-                <p className="mt-2">Bachelor of Information Systems</p>
-                <p className="mt-2 font-semibold">Dual track in</p>
-                <div className="flex flex-col items-center mt-4 md:flex-row md:justify-center ">
-                  <div className="w-full md:w-1/2 flex items-center justify-center md:mt-0 mx-auto bg-white p-4 rounded-3xl shadow-lg m-4">
-                    <div className="text-center">
-                      <p className="mt-2 font-semibold">Business Analytics</p>
-                      <img
-                        src="ba.png"
-                        alt="Business Analytics"
-                        width={60}
-                        className="mx-auto"
-                      />
-                      <ul className="list-disc list-inside mt-2 text-left">
-                        <li>Data Mining and Business Analytics</li>
-                        <li>Financial Analytics</li>
-                        <li>Social Analytics and Applications</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="w-4"></div>
-                  <div className="w-full md:w-1/2 flex items-center justify-center md:mt-0 mx-auto bg-white p-4 rounded-3xl shadow-lg m-4">
-                    <div className="text-center">
-                      <p className="mt-2 font-semibold">
-                        Digitalization and Cloud Solutions
-                      </p>
-                      <img
-                        src="dcs.png"
-                        alt="Digitalization and Cloud Solutions"
-                        width={60}
-                        className="mx-auto"
-                      />
-                      <ul className="list-disc list-inside mt-2 text-left">
-                        <li>IT Solution Architecture</li>
-                        <li>Digital Transformation Strategy</li>
-                        <li>Enterprise Business Solution</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
-              <div style={{ width: "15%", height: "100%" }}>
-                <img
-                  src="https://www.ibo.org/globalassets/new-structure/icons-and-logos/images/ib-world-school-logo-1-colour-rev.png"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="ml-4 flex-1">
-                <p className="font-semibold">Tunas Muda School</p>
-                <div className="flex items-center mt-2 text-slate-500">
-                  <div className="mr-2">
-                    <AiFillCalendar />
-                  </div>
-                  <p>2018 - 2021</p>
-                </div>
-                <ul className="list-disc list-inside mt-2">
-                  <li>International Baccaulareaute Diploma</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
         <div
           ref={contentRefs.experience}
           id="experience"
           className="min-h-screen"
         >
-          <div className="w-[70%] ml-[10%] mt-16 relative">
+          <div className="w-[85%] ml-[5%] mt-16 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
-              <TbBooks className="mr-2" />
+              <TbBriefcase className="mr-2" />
               <h2 className="font-mono">Experience</h2>
             </div>
 
-            <ol className="relative border-s-4 border-slate-700">
-              <li className="mb-10 ms-6">
-                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
-                  <img src="cofco.png" alt="Your Logo" width={30} />
-                </div>
-                <div className="ml-6">
-                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Analyst
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded light:bg-blue-900 dark:text-blue-300 ms-3">
-                      Latest
-                    </span>
-                  </h3>
-                  <div className="flex flex-row justify-between mb-2">
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      COFCO International
-                    </time>
+            <AnimatePresence>
+              {showLine && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  whileInView={{ height: "100%", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  variants={container}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="absolute left-6 w-1 bg-gradient-to-b from-slate-950 to-transparent rounded-full"
+                  style={{ zIndex: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                />
+              )}
+            </AnimatePresence>
 
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      August 2024 - February 2025
-                    </time>
+            <motion.ol
+              className="relative ps-6 border-l-4 border-transparent"
+              variants={container}
+              initial="hidden"
+              whileInView="visible"
+              exit="hidden"
+              viewport={{ once: false, amount: 0.2 }}
+            >
+              {experiences.map((exp, index) => (
+                <motion.li
+                  key={index}
+                  className="mb-8 ms-6 relative"
+                  variants={item}
+                >
+                  <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-14 h-14 w-14 shadow-xl hover:ring-2 hover:ring-slate-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition">
+                    <img
+                      src={exp.logo}
+                      alt={`${exp.company} logo`}
+                      width={30}
+                    />
                   </div>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Collaborated with traders and operations teams to
-                    understand workflow requirements, identifying opportunities
-                    for process improvement and automation, resulted in an
-                    increase in operational efficiency in commodity trading.
-                  </p>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Developed and maintained Python applications to automate
-                    data analysis and reporting tasks, reducing manual
-                    processing time and enhancing accuracy of commodity price
-                    monitoring and risk management.
-                  </p>
-                </div>
-              </li>
-              <li className="mb-10 ms-6">
-                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
-                  <img src="marymount.png" alt="Your Logo" width={30} />
-                </div>
-                <div className="ml-6">
-                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Software Engineering Intern
-                  </h3>
-                  <div className="flex flex-row justify-between mb-2">
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      Marymount Labs
-                    </time>
 
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      May 2024 - August 2024
-                    </time>
-                  </div>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Spearheaded development of robust and scalable backend
-                    architectures with Redis, Flask, and Streamlit for digital
-                    health solutions, implementing end-to-end systems for
-                    preventive health campaigns and patient stratification.
-                  </p>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Engineered front-end assets leveraging Next.js and
-                    Tailwind, created secured digital forms for clinical
-                    operations, streamlining processes and enhancing
-                    presentation of digital health solutions.
-                  </p>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Conducted statistical analysis research for vaccination
-                    interventions using Python to developed an automated
-                    screening tool, and performed ad-hoc data analysis projects,
-                    improving data-driven decision-making in medical
-                    institutions.
-                  </p>
-                </div>
-              </li>
-              <li className="mb-10 ms-6">
-                <div className="absolute flex items-center justify-center bg-slate-50 p-4 rounded-full -start-8 shadow-xl">
-                  <img src="adi.png" alt="Your Logo" width={30} />
-                </div>
-                <div className="ml-6">
-                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Software Engineer
-                  </h3>
-                  <div className="flex flex-row justify-between mb-2">
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      Aboitiz Data Innovation
-                    </time>
+                  <div className="ml-6">
+                    <h3 className="flex items-center mb-1 text-lg font-semibold text-slate-900">
+                      {exp.title}
+                      {exp.badge && (
+                        <span className="ml-3 inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-600/10 text-blue-500 ring-1 ring-blue-500">
+                          {exp.badge}
+                        </span>
+                      )}
+                    </h3>
 
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      January 2023 - April 2024
-                    </time>
+                    <div className="flex justify-between text-sm text-slate-400 mb-2">
+                      <span>{exp.company}</span>
+                      <span>{exp.time}</span>
+                    </div>
+
+                    <ul className="list-disc text-sm list-inside space-y-2 text-slate-600">
+                      {exp.summary.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {exp.skills &&
+                        exp.skills.map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-block bg-blue-50 text-slate-900 text-xs font-semibold px-2.5 py-0.5 rounded-lg shadow-sm hover:bg-blue-200 transition"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                    </div>
+
+
                   </div>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Implemented a user-friendly platform with NextJS for
-                    front-end and FastAPI on Digital Ocean, ensuring high
-                    availability, scalability, and seamless integration of
-                    machine learning models
-                  </p>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Achieved ~9% Mean Absolute Percentage Error in property
-                    price predictions through integration of advanced machine
-                    learning models within a web application for real estate
-                    valuation
-                  </p>
-                  <a
-                    href="https://satelilit.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-2xl px-4 p-1 bg-transparent border-blue-500 border-2 hover:bg-blue-500 text-blue-500 hover:text-white w-44 flex items-center"
-                  >
-                    <AiFillPlayCircle className="mr-2 ml-1" />
-                    View Product
-                  </a>
-                </div>
-              </li>
-              <li className="mb-10 ms-6">
-                <div className="absolute flex items-center justify-center bg-slate-50 p-1 py-4 rounded-full -start-8 shadow-xl">
-                  <img
-                    src="https://vflowtech.com/wp-content/uploads/2021/10/VFT-Logo-PNG.png"
-                    alt="Your Logo"
-                    width={50}
-                  />
-                </div>
-                <div className="ml-6">
-                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Product Management Intern
-                  </h3>
-                  <div className="flex flex-row justify-between mb-2">
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      VFlowTech
-                    </time>
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      May 2023 - Nov 2023
-                    </time>
-                  </div>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Developed product plan and milestones, execution of
-                    project and coordination with other departments, and
-                    preparing product report and visualization of status
-                  </p>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Communicate and engage with stakeholders to ensure end
-                    products or processes will solve related challenges,
-                    including product status, roadblocks, and escalations to
-                    Management
-                  </p>
-                </div>
-              </li>
-              <li className="mb-10 ms-6">
-                <div className="absolute flex items-center justify-center bg-slate-50 p-2 rounded-full -start-8 shadow-xl">
-                  <img src="smua.png" alt="Your Logo" width={45} />
-                </div>
-                <div className="ml-6">
-                  <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 ">
-                    Student Assistant
-                  </h3>
-                  <div className="flex flex-row justify-between mb-2">
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      SMU Academy
-                    </time>
-                    <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                      July 2022 - Present
-                    </time>
-                  </div>
-                  <p className="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Facilitate Course support for SkillsFuture funded courses
-                    for working professionals in partnership with the Government
-                    for Technology and Intelligent Systems, Service, Operations,
-                    and Business management courses
-                  </p>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                    • Conduct compilation of attendance, assessments, evaluation
-                    reports. Approving and verifying participants registrations.
-                    Setting up of units in learning management system. Creation
-                    of administrative documents.
-                  </p>
-                </div>
-              </li>
-            </ol>
+                </motion.li>
+              ))}
+            </motion.ol>
           </div>
         </div>
 
-        <div ref={contentRefs.projects} id="projects" className="min-h-screen">
-          <div className="w-[75%] ml-[10%] mt-20 relative">
-            <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
+        {/* Projects Section */}
+
+        <div
+          ref={contentRefs.projects}
+          id="projects"
+          className="min-h-screen py-20"
+        >
+          <div className="w-[85%] ml-[7.5%]">
+            <div className="flex items-center text-blue-500 text-2xl mb-6">
               <AiOutlineLaptop className="mr-2" />
               <h2 className="font-mono">Projects</h2>
             </div>
-            <Carousel
-              plugins={[plugin.current]}
-              onMouseEnter={plugin.current.stop}
-              onMouseLeave={plugin.current.reset}
-            >
-              <CarouselContent className="-ml-1">
-                {projects.map((project, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="p-3 md:basis-1/2 lg:basis-1/3"
-                  >
-                    <div className="bg-slate-50 shadow-md rounded-lg h-[500px] hover:rounded-lg">
-                      <img
-                        src={project.src}
-                        alt={`Image ${index + 1}`}
-                        className="rounded-t-lg shadow-lg mb-6"
-                      />
-                      <div className="px-2 mx-4">
-                        <h3 className="text-lg font-semibold mx-auto text-center font-mono mb-2">
-                          {project.title}
-                        </h3>
-                        <p className="mb-4 mx-auto">{project.description}</p>
-                        <div className="grid grid-cols-5 gap-2 mx-auto">
-                          {project.tags.map((tag, tagIndex) => (
-                            <div
-                              key={tagIndex}
-                              className="flex items-center justify-center w-8 h-8 justify-self-center"
-                              style={{ minWidth: "32px", minHeight: "32px" }}
-                            >
-                              <img
-                                src={tag}
-                                alt={tag}
-                                className="rounded-lg shadow-md p-1 hover:scale-110 object-contain h-full w-full"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
+
+
+            
+    <section className="py-16 px-6 bg-white">
+      <h2 className="text-4xl font-bold text-center mb-12">Projects</h2>
+
+      <div className="grid gap-10 md:grid-cols-3">
+        {projects.map((project, i) => (
+          <div
+            key={i}
+            className="rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300"
+          >
+            <div className="overflow-hidden rounded-t-2xl h-48">
+              <img
+                src={`/${project.src[0]}`}
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="p-5">
+              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+              <p className="text-sm text-gray-600">{project.description}</p>
+
+              <div className="flex flex-wrap gap-2 mt-4">
+                {project.tags.map((tag, j) => (
+                  <img
+                    key={j}
+                    src={`/${tag}`}
+                    alt={tag}
+                    className="h-6 w-6 object-contain"
+                  />
                 ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
           </div>
         </div>
+
+        {/* Skills Section */}
 
         <div ref={contentRefs.skills} id="skills" className="min-h-screen">
           <div className="w-[75%] ml-[10%] mt-20 relative">

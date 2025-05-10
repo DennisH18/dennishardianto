@@ -23,4 +23,26 @@
     animation: shineSwipe 1s ease-out forwards;
   }
   
+  .textured-bg {
+    position: relative;
+    --x: 50%;
+    --y: 50%;
+  }
+  
+  .textured-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 12px 12px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s ease;
+    mask-image: radial-gradient(circle at var(--x) var(--y), white 100px, transparent 150px);
+    -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), white 100px, transparent 150px);
+  }
+  .textured-bg:hover::before {
+    opacity: 1;
+  }
   

@@ -44,7 +44,7 @@ const ParticlesBackground = () => {
         outModes: { default: OutMode.out },
       },
       number: {
-        value: 50,
+        value: 200,
         density: { enable: true, area: 800 },
       },
       opacity: { value: 0.5 },

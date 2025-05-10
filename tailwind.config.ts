@@ -23,10 +23,16 @@ const config: Config = {
       },
       animation: {
         'expand-left-to-right': 'expand-left-to-right 0.5s ease',
+        'expand-right-to-left': 'expand-right-to-left 0.5s ease',
         'expand': 'expand 0.5s ease-in-out',
+        'letter-glow': 'letter-glow 1.8s ease-in-out infinite',
       },
       keyframes: {
         'expand-left-to-right': {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
+        },
+        'expand-right-to-left': {
           '0%': { width: '0%' },
           '100%': { width: '100%' },
         },
