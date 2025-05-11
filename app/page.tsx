@@ -20,12 +20,12 @@ import Autoplay from "embla-carousel-autoplay";
 import { useCallback } from "react";
 import ParticlesBackground from "@/components/ui/ParticlesBackground";
 import { motion, AnimatePresence } from "framer-motion";
-import { TbHeartHandshake } from "react-icons/tb";
-
-function IpadModel() {
-  const { scene } = useGLTF("/models/ipad_pro_2020.glb");
-  return <primitive object={scene} />;
-}
+import { useScroll, useTransform } from "framer-motion";
+import { ThreeDMarquee } from "@/components/ui/3d-marquee";
+import {
+  Radar, RadarChart, PolarGrid,
+  PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
+} from "recharts";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -117,7 +117,23 @@ export default function Home() {
     setCopiedPhone(true);
     setTimeout(() => setCopiedPhone(false), 5000);
   };
-
+  const Pcontainer = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: Pcontainer,
+    offset: ["start end", "end start"],
+  });
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  const skillData = [
+    { subject: "Project Mgmt", A: 90 },
+    { subject: "Full Stack", A: 85 },
+    { subject: "Data Analysis", A: 80 },
+    { subject: "Machine Learning", A: 70 },
+    { subject: "UI/UX", A: 65 }
+  ];
+  const techStack = [
+    "python.png", "react.png", "node.png",
+    "tailwind.png", "postgres.png", "pandas.png"
+  ];
   const projects = [
     {
       src: ["Satelilit-1.png", "Satelilit-2.png", "Satelilit-3.png"],
@@ -130,7 +146,7 @@ export default function Home() {
       src: ["BB-1.png", "BB-2.png", "BB-3.png"],
       title: "BoschBoard",
       description:
-        "Created a real-time analytics dashboard for Bosch tool monitoring, winning finalist position at Deep Learning Week 2024 with anomaly detection and performance insights.",
+        "Created a real-time analytics dashboard for Bosch tool monitoring, finalist position at Deep Learning Week 2024 with anomaly detection and performance insights.",
       tags: ["next.png", "fast.png", "pandas.png", "pytorch.png", "maps.png"],
     },
     {
@@ -144,12 +160,11 @@ export default function Home() {
 
   const navItems = [
     { id: "introduction", label: "Introduction", icon: <AiOutlineCode /> },
-    // { id: "education", label: "Education", icon: <TbSchool /> },
     { id: "experience", label: "Experience", icon: <TbBriefcase /> },
     { id: "projects", label: "Projects", icon: <AiOutlineLaptop /> },
     { id: "skills", label: "Skills", icon: <AiOutlineBulb /> },
-    { id: "interests", label: "Interests", icon: <TbHeartHandshake /> },
   ];
+
   const container = {
     hidden: {},
     visible: {
@@ -228,6 +243,41 @@ export default function Home() {
       ],
     },
   ];
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.15, duration: 0.6 },
+    }),
+  };
+
+  const ImageRotator = ({ images }: { images: string[] }) => {
+    const [idx, setIdx] = useState(0);
+    useEffect(() => {
+      const id = setInterval(
+        () => setIdx((i) => (i + 1) % images.length),
+        3000
+      );
+      return () => clearInterval(id);
+    }, [images.length]);
+
+    return (
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={images[idx]}
+          src={`/projects/${images[idx]}`}
+          alt=""
+          className="w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+        />
+      </AnimatePresence>
+    );
+  };
 
   return (
     <div className="flex">
@@ -508,7 +558,7 @@ export default function Home() {
           id="experience"
           className="min-h-screen"
         >
-          <div className="w-[85%] ml-[5%] mt-16 relative">
+          <div className="w-[85%] mx-auto mt-16 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-4">
               <TbBriefcase className="mr-2" />
               <h2 className="font-mono">Experience</h2>
@@ -583,8 +633,6 @@ export default function Home() {
                           </span>
                         ))}
                     </div>
-
-
                   </div>
                 </motion.li>
               ))}
@@ -597,65 +645,67 @@ export default function Home() {
         <div
           ref={contentRefs.projects}
           id="projects"
-          className="min-h-screen py-20"
+          className="min-h-screen py-20 overflow-y-auto"
         >
-          <div className="w-[85%] ml-[7.5%]">
-            <div className="flex items-center text-blue-500 text-2xl mb-6">
-              <AiOutlineLaptop className="mr-2" />
-              <h2 className="font-mono">Projects</h2>
+          <div className="w-[85%] ml-[5%] relative">
+            <div className="flex items-center text-blue-500 text-3xl z-30 mb-10">
+              <AiOutlineLaptop className="mr-3" />
+              <h2 className="font-mono tracking-wide">Projects</h2>
             </div>
 
+            <div className="grid md:grid-cols-3 gap-6">
+              {projects.map((project, index) => {
+                const [currentIndex, setCurrentIndex] = useState(0);
 
-            
-    <section className="py-16 px-6 bg-white">
-      <h2 className="text-4xl font-bold text-center mb-12">Projects</h2>
+                useEffect(() => {
+                  const interval = setInterval(() => {
+                    setCurrentIndex((prev) => (prev + 1) % project.src.length);
+                  }, 2500);
+                  return () => clearInterval(interval);
+                }, [project.src.length]);
 
-      <div className="grid gap-10 md:grid-cols-3">
-        {projects.map((project, i) => (
-          <div
-            key={i}
-            className="rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300"
-          >
-            <div className="overflow-hidden rounded-t-2xl h-48">
-              <img
-                src={`/${project.src[0]}`}
-                alt={project.title}
-                className="w-full h-full object-cover"
-              />
+                return (
+                  <motion.div
+                    key={index}
+                    className="rounded-2xl border border-white/10 backdrop-blur-lg transition-all duration-500 flex flex-col justify-between hover:shadow-xl p-4"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <motion.div
+                      className="overflow-hidden rounded-xl h-56 relative"
+                      whileHover={{ scale: 1.03 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <motion.img
+                        src={project.src[currentIndex]}
+                        alt={project.title}
+                        initial={{ scale: 1 }}
+                        animate={{ scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute inset-0 w-full h-full object-contain"
+                      />
+                    </motion.div>
+
+                    <h3 className="text-xl font-bold mb-3">{project.title}</h3>
+                    <p className="text-sm mb-5 leading-relaxed">
+                      {project.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
-
-            <div className="p-5">
-              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-              <p className="text-sm text-gray-600">{project.description}</p>
-
-              <div className="flex flex-wrap gap-2 mt-4">
-                {project.tags.map((tag, j) => (
-                  <img
-                    key={j}
-                    src={`/${tag}`}
-                    alt={tag}
-                    className="h-6 w-6 object-contain"
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
           </div>
         </div>
 
         {/* Skills Section */}
 
         <div ref={contentRefs.skills} id="skills" className="min-h-screen">
-          <div className="w-[75%] ml-[10%] mt-20 relative">
+          <div className="w-[85%] ml-[5%] mt-20 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-6">
               <AiOutlineBulb className="mr-2" />
               <h2 className="font-mono">Skills and Expertise</h2>
             </div>
-            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+            <div className="mt-4 text-slate-900 p-4 rounded-2xl flex items-center shadow-xl">
               <div style={{ width: "15%", height: "100%" }}>
                 <img src="pm.png" className="w-full h-full object-cover" />
               </div>
@@ -669,7 +719,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+            <div className="mt-4 text-slate-900 p-4 rounded-2xl flex items-center shadow-xl">
               <div style={{ width: "15%", height: "100%" }}>
                 <img src="dev.png" className="w-full h-full object-cover" />
               </div>
@@ -683,7 +733,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mt-4 text-slate-900 p-4 bg-slate-50 rounded-2xl flex items-center shadow-xl">
+            <div className="mt-4 text-slate-900 p-4 rounded-2xl flex items-center shadow-xl">
               <div style={{ width: "15%", height: "100%" }}>
                 <img src="dsa.png" />
               </div>
@@ -700,6 +750,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+
+
+
+
+
+        
       </div>
     </div>
   );
