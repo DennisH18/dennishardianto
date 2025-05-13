@@ -1,7 +1,6 @@
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
-  
 
   @keyframes shineSwipe {
     0% {
@@ -13,22 +12,22 @@
       opacity: 0;
     }
   }
-  
+
   .shine-animate {
     animation: shineSwipe 1s ease-out forwards;
     pointer-events: none;
   }
-  
+
   .group:hover .shine-hover {
     animation: shineSwipe 1s ease-out forwards;
   }
-  
+
   .textured-bg {
     position: relative;
     --x: 50%;
     --y: 50%;
   }
-  
+
   .textured-bg::before {
     content: "";
     position: absolute;
@@ -45,4 +44,34 @@
   .textured-bg:hover::before {
     opacity: 1;
   }
-  
+
+  @layer base {
+  .theme {
+        --animate-aurora: aurora 8s ease-in-out infinite alternate;
+    }
+}
+
+  @theme inline {
+  @keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+        }
+  25% {
+    background-position: 50% 100%;
+    transform: rotate(5deg) scale(1.1);
+        }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-3deg) scale(0.95);
+        }
+  75% {
+    background-position: 50% 0%;
+    transform: rotate(3deg) scale(1.05);
+        }
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+        }
+    }
+}

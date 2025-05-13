@@ -17,27 +17,25 @@ import {
 } from "react-icons/ai";
 import { TbBriefcase, TbCopy } from "react-icons/tb";
 import Autoplay from "embla-carousel-autoplay";
+import { FaGithub } from "react-icons/fa";
 import { useCallback } from "react";
 import ParticlesBackground from "@/components/ui/ParticlesBackground";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useTransform, useAnimation } from "framer-motion";
-import { ThreeDMarquee } from "@/components/ui/3d-marquee";
+import { ExternalLink, Heart } from "lucide-react";
+import { Globe } from "@/components/magicui/globe";
+import { MagicCard } from "@/components/magicui/magic-card";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -142,56 +140,89 @@ export default function Home() {
     { subject: "Machine Learning", A: 70 },
     { subject: "UI/UX", A: 65 },
   ];
+
   const techStack = [
-    "adi.png",
     "react.png",
     "node.png",
-    "tailwind.png",
-    "ba.png",
-    "cofco.png",
+    "docker.png",
+    "python.png",
+    "supabase.png",
+    "tail.png",
+    "aws.png",
+    "ts.png",
+    "azure.png",
+    "pp.png",
+    "pytorch.png",
+    "vercel.png",
+    "openai.png",
+    "kong.png",
+    "fast.png",
+    "firebase.png",
+    "google.png",
+    "githubb.png",
+    "jwt.png",
+    "next.png",
+    "pandas.png",
+    "js.png",
   ];
+
+  const skills = [
+    { name: "React", level: 90 },
+    { name: "Python", level: 85 },
+    { name: "SQL", level: 80 },
+    { name: "Tailwind", level: 75 },
+    { name: "Streamlit", level: 70 },
+  ];
+
+  const COLORS = ["#60a5fa", "#818cf8", "#34d399", "#f472b6", "#fbbf24"];
   const projects = [
-    {
-      src: ["Satelilit-1.png", "Satelilit-2.png", "Satelilit-3.png"],
-      title: "Satelilit.ai",
-      description:
-        "ML-powered platform for housing valuation, leveraging geospatial regression models to predict property prices.",
-      tags: ["NextJs", "XGBoost", "Pytorch", "Maps API"],
-    },
     {
       src: ["BB-1.png", "BB-2.png", "BB-3.png"],
       title: "BoschBoard",
       description:
         "Real-time analytics dashboard for Bosch tool monitoring and anomaly detection, finalist position at Deep Learning Week 2024",
-      tags: ["NextJS", "FastAPI", "Vercel", "SQL"],
+      tags: ["NextJS", "FastAPI", "SQL"],
+      year: "2025",
     },
     {
       src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
       title: "Financial Analytics Dashboard",
       description:
         "Automated dashboard for financial reporting, enabling streamlined Balance Sheet and P&L analysis",
-      tags: ["Python", "SQL", "Google API", "Altair"],
+      tags: ["Python", "SQL", "Altair"],
+      year: "2025",
     },
     {
-      src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
+      src: ["Satelilit-1.png", "Satelilit-2.png", "Satelilit-3.png"],
+      title: "Satelilit.ai",
+      description:
+        "ML-powered platform for housing valuation, leveraging geospatial regression models to predict property prices.",
+      tags: ["XGBoost", "Pytorch", "Maps API"],
+      year: "2024",
+    },
+    {
+      src: ["ITSA-1.png", "ITSA-2.png", "ITSA-3.png"],
       title: "IT Solution Architecture",
       description:
         "Secure Authentication System and database architecture built on AWS cloud services",
-      tags: ["AWS", "JWT", "React", "SASS"],
+      tags: ["AWS", "JWT", "React"],
+      year: "2024",
     },
     {
       src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
       title: "Leave Management System",
       description:
         "Platform for Leave Management built on Microservices architecture",
-      tags: ["Docker", "Kong API", "Kubernetes", "React"],
+      tags: ["Docker", "Kong API", "Kubernetes"],
+      year: "2023",
     },
     {
-      src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
+      src: ["GW-1.png", "GW-2.png", "GW-3.png"],
       title: "Software Project Management",
       description:
         "One stop internal Hiring platform built on Test Driven Development and CI/CD",
-      tags: ["Cypress", "Python", "NextJS", "Supabase"],
+      tags: ["Python", "NextJS", "Supabase"],
+      year: "2023",
     },
   ];
 
@@ -280,42 +311,6 @@ export default function Home() {
       ],
     },
   ];
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15, duration: 0.6 },
-    }),
-  };
-
-  const ImageRotator = ({ images }: { images: string[] }) => {
-    const [idx, setIdx] = useState(0);
-    useEffect(() => {
-      const id = setInterval(
-        () => setIdx((i) => (i + 1) % images.length),
-        3000
-      );
-      return () => clearInterval(id);
-    }, [images.length]);
-
-    return (
-      <AnimatePresence initial={false}>
-        <motion.img
-          key={images[idx]}
-          src={`/projects/${images[idx]}`}
-          alt=""
-          className="w-full h-full object-cover"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-        />
-      </AnimatePresence>
-    );
-  };
-  const controls = useAnimation();
 
   return (
     <div className="flex">
@@ -722,16 +717,21 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 30 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true, amount: 0.3 }}
+                    viewport={{ once: false, amount: 0.3 }}
                     className="rounded-lg border border-white backdrop-blur-lg transition-all duration-500 flex flex-col justify-between p-4 hover:border-slate-200 hover:shadow-lg"
                   >
-                    <h3 className="text-lg font-bold mb-2">{project.title}</h3>
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-lg font-bold ">{project.title}</h3>
+                      <span className="text-xs text-blue-400">
+                        {project.year}
+                      </span>
+                    </div>
                     <p className="text-sm mb-3 leading-relaxed">
                       {project.description}
                     </p>
 
                     <motion.div
-                      className="relative overflow-hidden h-40 w-80 group"
+                      className="relative flex items-center justify-center group overflow-hidden"
                       onMouseEnter={startSlideshow}
                       onMouseLeave={stopSlideshow}
                     >
@@ -744,7 +744,7 @@ export default function Home() {
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: -30 }}
                           transition={{ duration: 0.5 }}
-                          className="absolute inset-0 w-full h-full"
+                          className="h-48 w-80 object-cover rounded-lg"
                         />
                       </AnimatePresence>
 
@@ -767,15 +767,32 @@ export default function Home() {
                       </motion.div>
                     </motion.div>
 
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {project.tags?.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs px-2 py-1 rounded-md text-slate-900 bg-slate-100"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    {/* Right: Read more (1/5) */}
+                    <div className="flex justify-between items-center mt-4 gap-2">
+                      {/* Left: Tags (4/6) */}
+                      <div className="flex flex-wrap gap-2 w-4/6">
+                        {project.tags?.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs px-2 py-1 rounded-md text-slate-900 bg-slate-100"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Right: Buttons (2/6 combined) */}
+                      <div className="w-2/6 flex justify-end gap-2">
+                        <button className="text-gray-400 hover:text-black">
+                          <FaGithub className="h-4 w-4" />
+                        </button>
+                        <button className="text-gray-400 hover:text-blue-500">
+                          <ExternalLink className="h-4 w-4" />
+                        </button>
+                        <button className="text-gray-400 hover:text-red-500">
+                          <Heart className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 );
@@ -787,128 +804,124 @@ export default function Home() {
         {/* Skills Section */}
 
         <div ref={contentRefs.skills} id="skills" className="min-h-screen">
-          <div className="w-[85%] ml-[4%] mt-20 relative">
+          <div className="w-[90%] ml-[4%] mt-20 relative">
             <div className="flex items-center text-blue-500 text-2xl z-30 mb-6">
               <AiOutlineBulb className="mr-2" />
-              <h2 className="font-mono">Skills and Expertise</h2>
+              <h2 className="font-mono">Skills and More</h2>
             </div>
 
-            {/* === Row 1: 3 equal columns === */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-              <div className="flex items-start p-4 bg-white rounded-2xl shadow-xl">
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">
-                    Experience
-                  </h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              {[
+                {
+                  title: "Experience",
+                  value: 5,
+                  caption: "across all industries",
+                },
+                {
+                  title: "Projects Completed",
+                  value: 12,
+                  caption: "from analytics to UI",
+                },
+                {
+                  title: "Hours Coding",
+                  value: 1000,
+                  caption: "across real client work",
+                },
+                {
+                  title: "Dashboards Deployed",
+                  value: 7,
+                  caption: "in production systems",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 bg-white rounded-xl shadow-lg border h-48"
+                >
+                  <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <p className="text-xs text-slate-500">{item.caption}</p>
                 </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-5 gap-4 mb-4 h-56">
+              <div className="col-span-3 bg-white rounded-xl shadow-lg border p-4">
+                <h3 className="text-lg font-semibold mb-4">Education</h3>
               </div>
-              <div className="flex items-start p-4 bg-white rounded-2xl shadow-xl">
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">
-                    Projects Completed
-                  </h3>
-                </div>
-              </div>
-              <div className="flex items-start p-4 bg-white rounded-2xl shadow-xl">
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">
-                    Hours Coding
-                  </h3>
-                </div>
-              </div>
-              <div className="flex items-start p-4 bg-white rounded-2xl shadow-xl">
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">
-                    Dashboards Deployed
-                  </h3>
-                </div>
+
+              <div className="col-span-2 bg-white rounded-xl shadow-lg border relative overflow-hidden">
+                <h3 className="text-lg font-semibold mb-4  p-4">Location</h3>
+                <Globe />
               </div>
             </div>
 
-            {/* === Row 2: 3 columns + 1 radar === */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
-              <div className="bg-black text-white p-6 rounded-2xl shadow-xl overflow-hidden">
-                <h3 className="text-lg font-semibold mb-4">Tech Stack</h3>
+            <div className="grid grid-cols-7 gap-4 mb-4 h-56">
+              <div className="col-span-3 bg-white rounded-xl shadow-lg border">
+                <div className="relative overflow-hidden">
+                  <h3 className="text-lg font-semibold p-4 mb-2">Tech Stack</h3>
 
-                <div className="space-y-4">
-                  {[0, 1].map((rowIndex) => (
-                    <motion.div
-                      key={rowIndex}
-                      className="flex gap-6 w-max"
-                      initial={{ x: 0 }}
-                      animate={{ x: ["0%", "-50%"] }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 20,
-                        ease: "linear",
-                        repeatType: "loop",
-                        delay: rowIndex === 1 ? 5 : 0,
-                      }}
-                    >
-                      {[...techStack, ...techStack].map((icon, i) => (
-                        <img
-                          key={`${rowIndex}-${i}`}
-                          src={`${icon}`}
-                          alt={icon}
-                          className="h-10 grayscale hover:grayscale-0 transition duration-300"
-                        />
+                  {/* Container for scrolling + gradients */}
+                  <div className="relative h-24 overflow-hidden">
+                    <div className="space-y-4">
+                      {[0, 1].map((rowIndex) => (
+                        <motion.div
+                          key={rowIndex}
+                          className="flex gap-6 w-max h-10 items-center"
+                          initial={{ x: 0 }}
+                          animate={{ x: ["0%", "-50%"] }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 30,
+                            ease: "linear",
+                            repeatType: "loop",
+                            delay: rowIndex * 10,
+                          }}
+                        >
+                          {[...techStack, ...techStack].map((icon, i) => (
+                            <img
+                              key={`${rowIndex}-${i}`}
+                              src={icon}
+                              alt="tech-icon"
+                              className="h-8 grayscale hover:grayscale-0 transition duration-300"
+                            />
+                          ))}
+                        </motion.div>
                       ))}
-                    </motion.div>
-                  ))}
+                    </div>
+
+                    <div className="absolute top-0 left-0 w-24 h-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+                    <div className="absolute top-0 w-24 right-0 h-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-2xl p-4 shadow-xl">
-              <h3 className="text-lg font-semibold mb-4 text-slate-800">
-                Skill Radar
-              </h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <RadarChart data={skillData}>
-                  <PolarGrid />
-                  <PolarAngleAxis dataKey="subject" />
-                  <PolarRadiusAxis angle={30} domain={[0, 100]} />
-                  <Radar
-                    name="Skill"
-                    dataKey="A"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
-                    fillOpacity={0.6}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
 
-          {/* === Row 3: 2 columns + 3 columns === */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div className="col-span-2 bg-white rounded-2xl p-4 shadow-xl">
-              <h3 className="text-lg font-semibold mb-2 text-slate-800">
-                Education
-              </h3>
-              <ul className="text-sm text-slate-600 leading-relaxed list-disc ml-5">
-                <li>
-                  SMU, BSc Information Systems — Major in Business Analytics &
-                  Digitalization
-                </li>
-                <li>
-                  Relevant courses: Data Science, Machine Learning, Software
-                  Engineering
-                </li>
-                <li>
-                  Exchange Program: University of Amsterdam (Analytics focus)
-                </li>
-              </ul>
-            </div>
-            <div className="col-span-3 bg-white rounded-2xl p-4 shadow-xl">
-              <h3 className="text-lg font-semibold mb-2 text-slate-800">
-                Certifications
-              </h3>
-              <ul className="text-sm text-slate-600 leading-relaxed list-disc ml-5">
-                <li>Scrum Master Certified (SMC)</li>
-                <li>Google Data Analytics Certificate</li>
-                <li>Microsoft Azure Fundamentals (AZ-900)</li>
-                <li>Intro to TensorFlow for Deep Learning — Udacity</li>
-              </ul>
+              <div className="col-span-4 rounded-xl shadow-lg border bg-white pr-6">
+                <h3 className="text-lg font-semibold p-6">Expertise</h3>
+                <ResponsiveContainer width="100%" height={120}>
+                  <BarChart data={skills}>
+                    <XAxis
+                      dataKey="name"
+                      tick={{ fontSize: 12, fill: "#334155" }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      type="number"
+                      domain={[0, 100]}
+                      tick={{ fontSize: 12 }}
+                    />
+                    <Tooltip
+                      cursor={{ fill: "rgba(0,0,0,0.05)" }}
+                      contentStyle={{}}
+                    />
+                    <Bar
+                      dataKey="level"
+                      fill="#3b82f6"
+                      barSize={16}
+                      radius={[4, 4, 0, 0]}
+                      animationDuration={1000}
+                    ></Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
