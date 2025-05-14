@@ -37,6 +37,8 @@ import {
   Cell,
 } from "recharts";
 import { Briefcase, CheckCircle, Code, BarChart2 } from "lucide-react";
+import { Ripple } from "@/components/magicui/ripple";
+import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -170,11 +172,11 @@ export default function Home() {
   ];
 
   const skills = [
-    { name: "React", level: 90 },
-    { name: "Python", level: 85 },
-    { name: "SQL", level: 80 },
-    { name: "Tailwind", level: 75 },
-    { name: "Streamlit", level: 70 },
+    { name: "Frontend", level: 90 },
+    { name: "Backend", level: 85 },
+    { name: "Data Analytics", level: 80 },
+    { name: "System Design", level: 70 },
+    { name: "PM", level: 65 },
   ];
 
   const COLORS = ["#60a5fa", "#818cf8", "#34d399", "#f472b6", "#fbbf24"];
@@ -807,7 +809,6 @@ export default function Home() {
 
         <div ref={contentRefs.skills} id="skills" className="min-h-screen">
           <div className="w-[90%] ml-[4%] mt-20 relative space-y-8">
-            {/* Header */}
             <motion.div
               className="flex items-center text-blue-500 text-2xl z-30"
               initial={{ opacity: 0, y: 10 }}
@@ -871,16 +872,18 @@ export default function Home() {
 
             {/* Education + Location */}
             <motion.div
-              className="grid grid-cols-5 gap-4 h-56"
+              className="grid grid-cols-4 gap-4 h-56"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
               {/* Education Card */}
-              <div className="col-span-3 bg-white rounded-xl shadow-lg border p-6 flex flex-col justify-between">
-                <h3 className="text-lg font-semibold mb-4">Education</h3>
-                <div className="space-y-4 text-sm text-slate-700">
-                  <div className="flex items-start gap-3">
+              <div className="col-span-2 bg-white rounded-xl p-6 shadow-lg border justify-between">
+                <h3 className="text-lg font-semibold mb-4">
+                  Education & Certifications
+                </h3>
+                <div className="text-sm text-slate-700">
+                  <div className="flex items-start gap-3 mb-4">
                     <img src="smu.png" alt="SMU Logo" className="w-10 h-10" />
                     <div>
                       <p className="font-medium text-slate-900">
@@ -903,6 +906,11 @@ export default function Home() {
                         Oracle University
                       </p>
                       <p>Java Foundations Certified Associate</p>
+                      <a
+                        href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=EB3D28B28CFFAA73F50339BE57731CB8E88BB64E4FA224DEDD2EE08BA36CFC55"
+                        className="text-xs text-slate-500 hover:text-blue-500"
+                        target="_blank"
+                      >See Credentials</a>
                     </div>
                   </div>
                 </div>

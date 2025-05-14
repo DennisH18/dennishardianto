@@ -48,6 +48,7 @@
   @layer base {
   .theme {
         --animate-aurora: aurora 8s ease-in-out infinite alternate;
+        --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite;
     }
 }
 
@@ -72,6 +73,14 @@
   100% {
     background-position: 0% 50%;
     transform: rotate(-5deg) scale(0.9);
+        }
+    }
+  @keyframes ripple {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+        }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
         }
     }
 }
