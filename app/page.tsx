@@ -36,6 +36,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { Briefcase, CheckCircle, Code, BarChart2 } from "lucide-react";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
@@ -70,6 +71,7 @@ export default function Home() {
       }
     };
   };
+  const icons = [<Briefcase />, <CheckCircle />, <Code />, <BarChart2 />];
 
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY + 150;
@@ -164,6 +166,7 @@ export default function Home() {
     "next.png",
     "pandas.png",
     "js.png",
+    "twilio.png",
   ];
 
   const skills = [
@@ -213,7 +216,7 @@ export default function Home() {
       title: "Leave Management System",
       description:
         "Platform for Leave Management built on Microservices architecture",
-      tags: ["Docker", "Kong API", "Kubernetes"],
+      tags: ["Docker", "Kong API", "RabbitMQ"],
       year: "2023",
     },
     {
@@ -502,7 +505,6 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-
               {/* Resume Button */}
               <div className="mt-6">
                 <button
@@ -804,17 +806,29 @@ export default function Home() {
         {/* Skills Section */}
 
         <div ref={contentRefs.skills} id="skills" className="min-h-screen">
-          <div className="w-[90%] ml-[4%] mt-20 relative">
-            <div className="flex items-center text-blue-500 text-2xl z-30 mb-6">
+          <div className="w-[90%] ml-[4%] mt-20 relative space-y-8">
+            {/* Header */}
+            <motion.div
+              className="flex items-center text-blue-500 text-2xl z-30"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <AiOutlineBulb className="mr-2" />
               <h2 className="font-mono">Skills and More</h2>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            {/* Metrics Cards */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-4 gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
               {[
                 {
                   title: "Experience",
-                  value: 5,
+                  value: 6,
                   caption: "across all industries",
                 },
                 {
@@ -824,8 +838,8 @@ export default function Home() {
                 },
                 {
                   title: "Hours Coding",
-                  value: 1000,
-                  caption: "across real client work",
+                  value: 3000,
+                  caption: "from study to shipping",
                 },
                 {
                   title: "Dashboards Deployed",
@@ -833,33 +847,85 @@ export default function Home() {
                   caption: "in production systems",
                 },
               ].map((item, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className="p-4 bg-white rounded-xl shadow-lg border h-48"
+                  className="group p-6 rounded-2xl shadow-md border border-blue-100 bg-white h-48 flex flex-col justify-between transition-all"
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="text-xs text-slate-500">{item.caption}</p>
-                </div>
+                  <div className="text-blue-500 mb-1 text-xl">{icons[idx]}</div>
+                  <div>
+                    <h3 className="text-gray-700 font-semibold h-8">
+                      {item.title}
+                    </h3>
+                    <NumberTicker
+                      value={item.value}
+                      className="text-4xl font-bold text-slate-900 mt-1 mb-1 h-12"
+                    />
+                    <p className="text-xs text-slate-500 h-12">
+                      {item.caption}
+                    </p>
+                  </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-5 gap-4 mb-4 h-56">
-              <div className="col-span-3 bg-white rounded-xl shadow-lg border p-4">
+            {/* Education + Location */}
+            <motion.div
+              className="grid grid-cols-5 gap-4 h-56"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              {/* Education Card */}
+              <div className="col-span-3 bg-white rounded-xl shadow-lg border p-6 flex flex-col justify-between">
                 <h3 className="text-lg font-semibold mb-4">Education</h3>
+                <div className="space-y-4 text-sm text-slate-700">
+                  <div className="flex items-start gap-3">
+                    <img src="smu.png" alt="SMU Logo" className="w-10 h-10" />
+                    <div>
+                      <p className="font-medium text-slate-900">
+                        Singapore Management University
+                      </p>
+                      <p>BSc in Information Systems</p>
+                      <p className="text-xs text-slate-500">
+                        Business Analytics & Digitalization
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <img
+                      src="oracle.png"
+                      alt="Oracle Logo"
+                      className="w-10 h-10"
+                    />
+                    <div>
+                      <p className="font-medium text-slate-900">
+                        Oracle University
+                      </p>
+                      <p>Java Foundations Certified Associate</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="col-span-2 bg-white rounded-xl shadow-lg border relative overflow-hidden">
-                <h3 className="text-lg font-semibold mb-4  p-4">Location</h3>
+              {/* Location with Globe */}
+              <div className="col-span-2 bg-white rounded-xl shadow-lg border relative overflow-hidden p-6">
+                <h3 className="text-lg font-semibold mb-4">Location</h3>
                 <Globe />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-7 gap-4 mb-4 h-56">
+            {/* Tech Stack + Expertise */}
+            <motion.div
+              className="grid grid-cols-7 gap-4 h-56"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              {/* Tech Stack Scroller */}
               <div className="col-span-3 bg-white rounded-xl shadow-lg border">
                 <div className="relative overflow-hidden">
                   <h3 className="text-lg font-semibold p-4 mb-2">Tech Stack</h3>
-
-                  {/* Container for scrolling + gradients */}
                   <div className="relative h-24 overflow-hidden">
                     <div className="space-y-4">
                       {[0, 1].map((rowIndex) => (
@@ -870,10 +936,10 @@ export default function Home() {
                           animate={{ x: ["0%", "-50%"] }}
                           transition={{
                             repeat: Infinity,
-                            duration: 30,
+                            duration: 15,
                             ease: "linear",
                             repeatType: "loop",
-                            delay: rowIndex * 10,
+                            delay: rowIndex * 6,
                           }}
                         >
                           {[...techStack, ...techStack].map((icon, i) => (
@@ -881,19 +947,19 @@ export default function Home() {
                               key={`${rowIndex}-${i}`}
                               src={icon}
                               alt="tech-icon"
-                              className="h-8 grayscale hover:grayscale-0 transition duration-300"
+                              className="h-8 hover:grayscale-0 transition duration-300"
                             />
                           ))}
                         </motion.div>
                       ))}
                     </div>
-
                     <div className="absolute top-0 left-0 w-24 h-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-                    <div className="absolute top-0 w-24 right-0 h-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-24 h-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
                   </div>
                 </div>
               </div>
 
+              {/* Expertise Chart */}
               <div className="col-span-4 rounded-xl shadow-lg border bg-white pr-6">
                 <h3 className="text-lg font-semibold p-6">Expertise</h3>
                 <ResponsiveContainer width="100%" height={120}>
@@ -908,21 +974,18 @@ export default function Home() {
                       domain={[0, 100]}
                       tick={{ fontSize: 12 }}
                     />
-                    <Tooltip
-                      cursor={{ fill: "rgba(0,0,0,0.05)" }}
-                      contentStyle={{}}
-                    />
+                    <Tooltip cursor={{ fill: "rgba(0,0,0,0.05)" }} />
                     <Bar
                       dataKey="level"
                       fill="#3b82f6"
                       barSize={16}
                       radius={[4, 4, 0, 0]}
                       animationDuration={1000}
-                    ></Bar>
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
