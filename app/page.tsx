@@ -137,13 +137,6 @@ export default function Home() {
     offset: ["start end", "end start"],
   });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
-  const skillData = [
-    { subject: "Project Mgmt", A: 90 },
-    { subject: "Full Stack", A: 85 },
-    { subject: "Data Analysis", A: 80 },
-    { subject: "Machine Learning", A: 70 },
-    { subject: "UI/UX", A: 65 },
-  ];
 
   const techStack = [
     "react.png",
@@ -172,14 +165,13 @@ export default function Home() {
   ];
 
   const skills = [
-    { name: "Frontend", level: 90 },
-    { name: "Backend", level: 85 },
-    { name: "Data Analytics", level: 80 },
+    { name: "Data Analytics", level: 95 },
+    { name: "Backend", level: 90 },
+    { name: "Frontend", level: 85 },
     { name: "System Design", level: 70 },
     { name: "PM", level: 65 },
   ];
 
-  const COLORS = ["#60a5fa", "#818cf8", "#34d399", "#f472b6", "#fbbf24"];
   const projects = [
     {
       src: ["BB-1.png", "BB-2.png", "BB-3.png"],
@@ -872,7 +864,7 @@ export default function Home() {
 
             {/* Education + Location */}
             <motion.div
-              className="grid grid-cols-4 gap-4 h-56"
+              className="grid grid-cols-5 gap-4 h-56"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
@@ -917,7 +909,7 @@ export default function Home() {
               </div>
 
               {/* Location with Globe */}
-              <div className="col-span-2 bg-white rounded-xl shadow-lg border relative overflow-hidden p-6">
+              <div className="col-span-3 bg-white rounded-xl shadow-lg border relative overflow-hidden p-6">
                 <h3 className="text-lg font-semibold mb-4">Location</h3>
                 <Globe />
               </div>
@@ -925,13 +917,13 @@ export default function Home() {
 
             {/* Tech Stack + Expertise */}
             <motion.div
-              className="grid grid-cols-7 gap-4 h-56"
+              className="grid grid-cols-2 gap-4 h-56"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
               {/* Tech Stack Scroller */}
-              <div className="col-span-3 bg-white rounded-xl shadow-lg border">
+              <div className="col-span-1 bg-white rounded-xl shadow-lg border">
                 <div className="relative overflow-hidden">
                   <h3 className="text-lg font-semibold p-4 mb-2">Tech Stack</h3>
                   <div className="relative h-24 overflow-hidden">
@@ -968,7 +960,7 @@ export default function Home() {
               </div>
 
               {/* Expertise Chart */}
-              <div className="col-span-4 rounded-xl shadow-lg border bg-white pr-6">
+              <div className="col-span-1 rounded-xl shadow-lg border bg-white pr-6">
                 <h3 className="text-lg font-semibold p-6">Expertise</h3>
                 <ResponsiveContainer width="100%" height={120}>
                   <BarChart data={skills}>
