@@ -24,8 +24,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useScroll, useTransform, useAnimation } from "framer-motion";
 import { ExternalLink, Heart } from "lucide-react";
 import { Globe } from "@/components/magicui/globe";
-import { MagicCard } from "@/components/magicui/magic-card";
-import { AuroraText } from "@/components/magicui/aurora-text";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import {
   BarChart,
