@@ -34,9 +34,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import { Briefcase, CheckCircle, Code, BarChart2 } from "lucide-react";
-import { Ripple } from "@/components/magicui/ripple";
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { BarChart2 } from "lucide-react";
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState("introduction");
