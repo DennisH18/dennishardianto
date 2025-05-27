@@ -71,8 +71,6 @@ export default function Home() {
       }
     };
   };
-  const icons = [<Briefcase />, <CheckCircle />, <Code />, <BarChart2 />];
-
   const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY + 150;
     const sections = Object.keys(contentRefs);
@@ -90,7 +88,7 @@ export default function Home() {
     }
   }, [contentRefs]);
   const [showLine, setShowLine] = useState(false);
-
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
     setShowLine(false);
     const timeout = setTimeout(() => setShowLine(true), 100);
@@ -204,7 +202,7 @@ export default function Home() {
       year: "2024",
     },
     {
-      src: ["Dashboard-1.png", "Dashboard-2.png", "Dashboard-3.png"],
+      src: ["LMS-1.png", "LMS-2.png", "LMS-3.png"],
       title: "Leave Management System",
       description:
         "Platform for Leave Management built on Microservices architecture",
@@ -245,6 +243,7 @@ export default function Home() {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const experiences = [
     {
@@ -448,7 +447,8 @@ export default function Home() {
               <h2 className="font-mono">Intro</h2>
             </div>
             <h2 className="text-5xl font-semibold leading-tight font-sans tracking-tight">
-              Hi, I'm Dennis,<br></br>
+              Hi, I&apos;m Dennis,
+              <br />
               Business Intelligence & Data Analyst
             </h2>
             <img
@@ -682,11 +682,6 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-2">
               {projects.map((project, index) => {
-                const [currentIndex, setCurrentIndex] = useState(0);
-                const intervalRef = useRef<ReturnType<
-                  typeof setInterval
-                > | null>(null);
-
                 const startSlideshow = () => {
                   if (!intervalRef.current) {
                     intervalRef.current = setInterval(() => {
@@ -821,21 +816,25 @@ export default function Home() {
                   title: "Experience",
                   value: 6,
                   caption: "across all industries",
+                  icon: <TbBriefcase />,
                 },
                 {
                   title: "Projects Completed",
                   value: 12,
                   caption: "from analytics to UI",
+                  icon: <AiOutlineLaptop />,
                 },
                 {
                   title: "Hours Coding",
                   value: 3000,
                   caption: "from study to shipping",
+                  icon: <AiOutlineCode />,
                 },
                 {
                   title: "Dashboards Deployed",
                   value: 7,
                   caption: "in production systems",
+                  icon: <BarChart2 />,
                 },
               ].map((item, idx) => (
                 <motion.div
@@ -843,7 +842,9 @@ export default function Home() {
                   className="group p-6 rounded-2xl shadow-md border border-blue-100 bg-white h-48 flex flex-col justify-between transition-all"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-blue-500 mb-1 text-xl">{icons[idx]}</div>
+                  <div className="text-blue-500 mb-1 text-xl" key={idx}>
+                    {item.icon}
+                  </div>
                   <div>
                     <h3 className="text-gray-700 font-semibold h-8">
                       {item.title}
@@ -900,7 +901,9 @@ export default function Home() {
                         href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=EB3D28B28CFFAA73F50339BE57731CB8E88BB64E4FA224DEDD2EE08BA36CFC55"
                         className="text-xs text-slate-500 hover:text-blue-500"
                         target="_blank"
-                      >See Credentials</a>
+                      >
+                        See Credentials
+                      </a>
                     </div>
                   </div>
                 </div>
