@@ -8,24 +8,28 @@ import { cn } from "@/lib/utils";
 
 const MOVEMENT_DAMPING = 1400;
 
+const SINGAPORE_LAT = 1.3521;
+const SINGAPORE_LNG = 103.8198;
+// cobe centers the camera on `-(lng + 90deg)`/`lat` (in radians), not
+// simply `-lng`/`lat` — verified empirically against the marker projection.
+const SINGAPORE_PHI = -(SINGAPORE_LNG + 90) * (Math.PI / 180);
+const SINGAPORE_THETA = SINGAPORE_LAT * (Math.PI / 180);
+
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
   onRender: () => {},
   devicePixelRatio: 2,
-  phi: -103.8198 * (Math.PI / 180),
-  theta: 1.3521 * (Math.PI / 180),
+  phi: SINGAPORE_PHI,
+  theta: SINGAPORE_THETA,
   dark: 0,
   diffuse: 0.4,
-  mapSamples: 16000,
+  mapSamples: 4000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
-  markerColor: [0, 102 / 255, 204 / 255], // blue
+  markerColor: [59 / 255, 130 / 255, 246 / 255], // accent blue
   glowColor: [0.6, 0.8, 1], // soft blue-white glow
-  markers: [
-    { location: [1.3521, 103.8198], size: 0.08 },     // Singapore
-    { location: [-6.2088, 106.8456], size: 0.08 },    // Jakarta, Indonesia
-  ],
+  markers: [{ location: [SINGAPORE_LAT, SINGAPORE_LNG], size: 0.12 }],
 };
 
 
@@ -36,7 +40,7 @@ export function Globe({
   className?: string;
   config?: COBEOptions;
 }) {
-  let phi = 0;
+  let sway = 0;
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
@@ -79,8 +83,10 @@ export function Globe({
       width: width * 2,
       height: width * 2,
       onRender: (state) => {
-        if (!pointerInteracting.current) phi += 0.005;
-        state.phi = phi + rs.get();
+        // Keep Singapore in view: gently sway around it instead of
+        // spinning all the way around, unless the user is dragging.
+        if (!pointerInteracting.current) sway += 0.004;
+        state.phi = config.phi + Math.sin(sway) * 0.35 + rs.get();
         state.width = width * 2;
         state.height = width * 2;
       },
@@ -96,7 +102,7 @@ export function Globe({
   return (
     <div
       className={cn(
-        "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]",
+        "relative mx-auto aspect-[1/1] h-full w-auto max-w-full",
         className,
       )}
     >

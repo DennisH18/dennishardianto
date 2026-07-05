@@ -2,6 +2,47 @@
   @tailwind components;
   @tailwind utilities;
 
+  @layer base {
+    html {
+      color-scheme: light;
+    }
+    html,
+    body {
+      background-color: #ffffff;
+    }
+  }
+
+  /* Custom cursor: hide the native one only on fine pointers */
+  @media (pointer: fine) {
+    body.custom-cursor,
+    body.custom-cursor * {
+      cursor: none !important;
+    }
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.25);
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+
   @keyframes shineSwipe {
     0% {
       transform: translateX(3rem) rotate(12deg);
